@@ -28,28 +28,28 @@ public class DrugsController {
         drugs.setDescription(dto.getDescription());
         drugs.setIndication(dto.getIndication());
         drugs.setContraIndication(dto.getContraIndication());
-        drugsService.save(drugs);
+//        drugsService.save(drugs);
 
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/v1/drugs/{id}")
     public ResponseEntity<Long> deleteDrugs(@PathVariable Long id) {
-        drugsService.deleteById(id);
+//        drugsService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/v1/drugs/{id}")
     public ResponseEntity<DrugsUpdateRequestDTO> updateDrugs(@RequestBody DrugsUpdateRequestDTO dto, @PathVariable Long id) {
 
-        Drugs drugs =  drugsService.findById(id).orElseThrow();
+//        Drugs drugs =  drugsService.findById(id).orElseThrow();
+//
+//        drugs.setDrugsName(dto.getDrugsName());
+//        drugs.setDescription(dto.getDescription());
+//        drugs.setIndication(dto.getIndication());
+//        drugs.setContraIndication(dto.getContraIndication());
 
-        drugs.setDrugsName(dto.getDrugsName());
-        drugs.setDescription(dto.getDescription());
-        drugs.setIndication(dto.getIndication());
-        drugs.setContraIndication(dto.getContraIndication());
-
-        drugsService.save(drugs);
+//        drugsService.save(drugs);
 
         return ResponseEntity.ok().build();
     }
