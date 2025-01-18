@@ -8,32 +8,32 @@
 
 <body class="container mt-5">
 <h1 class="mb-4 text-center" th:text="${pageTitle}">Add/Edit Company</h1>
-<form method="POST" th:action="@{/company/save}" th:object="${company}" class="needs-validation" novalidate>
+<form method="POST" th:action="@{/company/add}" th:object="${companyCreateRequestDTO}" class="needs-validation" novalidate>
 
     <div class="mb-3">
-        <label for="name" class="form-label"><b>Company Name</b></label>
-        <input type="text" id="name" name="name" class="form-control" th:field="*{name}" required>
-        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></div>
+        <label for="companyName" class="form-label"><b>Company Name</b></label>
+        <input type="text" id="companyName" name="companyName" class="form-control" th:field="*{companyName}" required>
+        <div th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}" class="text-danger"></div>
     </div>
 
 
     <div class="mb-3">
-        <label for="address" class="form-label"><b>Company Address</b></label>
-        <textarea id="address" name="address" rows="3" class="form-control" th:field="*{address}" required></textarea>
-        <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"></div>
+        <label for="companyAddress" class="form-label"><b>Company Address</b></label>
+        <textarea id="companyAddress" name="companyAddress" rows="3" class="form-control" th:field="*{companyAddress}" required></textarea>
+        <div th:if="${#fields.hasErrors('companyAddress')}" th:errors="*{companyAddress}" class="text-danger"></div>
     </div>
 
 
     <div class="mb-3">
-        <label for="email" class="form-label"><b>Company Email</b></label>
-        <input type="email" id="email" name="email" class="form-control" th:field="*{email}" required>
-        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></div>
+        <label for="companyEmail" class="form-label"><b>Company Email</b></label>
+        <input type="text" id="companyEmail" name="companyEmail" class="form-control" th:field="*{companyEmail}" required>
+        <div th:if="${#fields.hasErrors('companyEmail')}" th:errors="*{companyEmail}" class="text-danger"></div>
     </div>
 
     <div class="mb-3">
-        <label for="phone" class="form-label"><b>Company Phone</b></label>
-        <input type="text" id="phone" name="phone" class="form-control" th:field="*{phone}" required>
-        <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger"></div>
+        <label for="companyPhone" class="form-label"><b>Company Phone</b></label>
+        <input type="text" id="companyPhone" name="phone" class="form-control" th:field="*{companyPhone}" required>
+        <div th:if="${#fields.hasErrors('companyPhone')}" th:errors="*{companyPhone}" class="text-danger"></div>
     </div>
 
     <div class="d-flex justify-content-end mb-3">

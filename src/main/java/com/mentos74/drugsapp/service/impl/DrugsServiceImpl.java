@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class DrugsServiceImpl implements DrugsService {
 
-    private final DrugsService drugsService;
+//    private final DrugsService drugsService;
 
-    @Override
-    public DrusgsResponseDTO findById(String id) {
-        return null;
-    }
+//    @Override
+//    public DrusgsResponseDTO findById(String id) {
+//        return null;
+//    }
 }
