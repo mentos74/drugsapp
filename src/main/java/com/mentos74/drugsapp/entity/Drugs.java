@@ -3,6 +3,7 @@ package com.mentos74.drugsapp.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,6 +11,9 @@ import java.util.List;
 @Entity
 @Data
 public class Drugs implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 8457007351017104208L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
