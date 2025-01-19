@@ -7,7 +7,7 @@
 </head>
 
 <body class="container mt-5">
-<h1 class="mb-4 text-center" th:text="${pageTitle}">Add/Edit Company</h1>
+<h1 class="mb-4 text-center" th:text="${pageTitle}">Add Company</h1>
 <form method="POST" th:action="@{/company/add}" th:object="${companyCreateRequestDTO}" class="needs-validation" novalidate>
 
     <div class="mb-3">
