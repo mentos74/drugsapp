@@ -9,8 +9,6 @@ import com.mentos74.drugsapp.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +21,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void createNewCompany(CompanyCreateRequestDTO dto) {
         Company company = new Company();
+
         company.setCompanyName(dto.getCompanyName());
         company.setCompanyEmail(dto.getCompanyEmail());
         company.setCompanyAddress(dto.getCompanyAddress());
@@ -32,8 +31,9 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void updateCompany(CompanyUpdateRequestDTO dto) {
-        Company company = new Company();
+    public void updateCompany(CompanyUpdateRequestDTO dto, Long id) {
+        Company company = companyRepository.findById(id).orElseThrow();
+
         company.setCompanyName(dto.getCompanyName());
         company.setCompanyEmail(dto.getCompanyEmail());
         company.setCompanyAddress(dto.getCompanyAddress());
@@ -50,8 +50,26 @@ public class CompanyServiceImpl implements CompanyService {
             dto.setCompanyEmail(c.getCompanyEmail());
             dto.setCompanyPhone(c.getCompanyPhone());
             dto.setCompanyName(c.getCompanyName());
+            dto.setCompanyId(c.getCompanyId());
             return dto;
 
         }).collect(Collectors.toList());
     }
+
+    @Override
+    public CompanyUpdateRequestDTO findCompanyById(Long id) {
+
+        Company comp =  companyRepository.findById(id).orElseThrow();
+
+        CompanyUpdateRequestDTO dto = new CompanyUpdateRequestDTO();
+        dto.setCompanyPhone(comp.getCompanyPhone());
+        dto.setCompanyAddress(comp.getCompanyAddress());
+        dto.setCompanyName(comp.getCompanyName());
+        dto.setCompanyId(comp.getCompanyId());
+        dto.setCompanyEmail(comp.getCompanyEmail());
+
+        return dto;
+    }
+
+
 }

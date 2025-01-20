@@ -3,6 +3,7 @@ package com.mentos74.drugsapp.web;
 
 import com.mentos74.drugsapp.dto.CompanyCreateRequestDTO;
 import com.mentos74.drugsapp.dto.CompanyResponseRequestDTO;
+import com.mentos74.drugsapp.dto.CompanyUpdateRequestDTO;
 import com.mentos74.drugsapp.service.CompanyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -46,6 +48,28 @@ public class CompanyResource {
             return "/company/add_company";
         }
         companyService.createNewCompany(companyCreateRequestDTO);
+        return "redirect:/company/list";
+    }
+
+
+    @GetMapping("/company/edit/{id}")
+    public String editNewPost(@PathVariable Long id, Model model) {
+        CompanyUpdateRequestDTO companyUpdateRequestDTO = companyService.findCompanyById(id);
+        System.out.println("jirrrrr>>>"+companyUpdateRequestDTO.getCompanyEmail());
+        model.addAttribute("companyUpdateRequestDTO", companyUpdateRequestDTO);
+        return "/company/edit_company";
+    }
+
+    @PostMapping("/company/edit/{id}")
+    public String updatePost(@PathVariable Long id,
+                             @ModelAttribute("companyUpdateRequestDTO") @Valid CompanyUpdateRequestDTO companyUpdateRequestDTO,
+                             BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("companyUpdateRequestDTO", companyUpdateRequestDTO);
+            return "/company/edit_company";
+        }
+
+        companyService.updateCompany(companyUpdateRequestDTO, id);
         return "redirect:/company/list";
     }
 

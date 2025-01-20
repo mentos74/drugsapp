@@ -9,6 +9,9 @@ import java.io.Serializable;
 public class CompanyResponseRequestDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = -4250872747730385397L;
+
+    Long companyId;
+
     String companyName;
 
     String companyAddress;
