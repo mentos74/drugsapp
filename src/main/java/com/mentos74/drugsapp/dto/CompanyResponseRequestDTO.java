@@ -10,6 +10,7 @@ import java.io.Serializable;
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class CompanyResponseRequestDTO implements Serializable {
+    
     @Serial
     private static final long serialVersionUID = -4250872747730385397L;
 
