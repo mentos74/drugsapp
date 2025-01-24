@@ -1,5 +1,8 @@
 package com.mentos74.drugsapp.entity;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,6 +13,7 @@ import java.util.List;
 @Table(name = "drugs")
 @Entity
 @Data
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Drugs implements Serializable {
 
     @Serial
