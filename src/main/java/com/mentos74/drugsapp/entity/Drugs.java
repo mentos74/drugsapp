@@ -21,12 +21,18 @@ public class Drugs implements Serializable {
 
     @Column(name= "drugs_name")
     String drugsName;
+
     @Column(name= "indication" , columnDefinition = "text")
     String indication;
+
     @Column(name= "contra_indication", columnDefinition = "text")
     String contraIndication;
+
     @Column(name= "description" , columnDefinition = "text")
     String description;
+
+
+
 //    @ElementCollection
 //    @Column(name = "ingredients")
 //    List<String> ingredients;
