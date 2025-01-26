@@ -10,6 +10,7 @@ import com.mentos74.drugsapp.service.ActiveIngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,14 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
         api.setDescription(dto.getDescription());
         api.setNameActiveIngredient(dto.getNameActiveIngredient());
         api.setChemicalFormula(dto.getChemicalFormula());
-        api.setChemicalStructure(dto.getChemicalStructure());
+
+        try {
+            // Simpan file sebagai byte array ke database
+            api.setChemicalStructure(dto.getChemicalStructure().getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to process file", e);
+        }
+
 
         activeINgredientRepository.save(api);
     }
@@ -39,7 +47,7 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
         api.setDescription(dto.getDescription());
         api.setNameActiveIngredient(dto.getNameActiveIngredient());
         api.setChemicalFormula(dto.getChemicalFormula());
-        api.setChemicalStructure(dto.getChemicalStructure());
+//        api.setChemicalStructure(dto.getChemicalStructure().getBytes());
 
         activeINgredientRepository.save(api);
 
@@ -59,7 +67,7 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
             dto.setNameActiveIngredient(c.getNameActiveIngredient());
             dto.setDescription(c.getDescription());
             dto.setChemicalFormula(c.getChemicalFormula());
-            dto.setChemicalStructure(c.getChemicalStructure());
+//            dto.setChemicalStructure(c.getChemicalStructure());
             return dto;
         }).collect(Collectors.toList());
         return listResponse;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Table(name = "active_ingredient")
 @Data
@@ -12,13 +13,14 @@ import lombok.Data;
 public class ActiveIngredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long activeIngredientId;
+    private Long activeIngredientId;
 
-    String nameActiveIngredient;
+    private String nameActiveIngredient;
 
-    String chemicalStructure;
+    @Lob // Menandai bahwa ini adalah data biner besar
+    private byte[] chemicalStructure;
 
-    String chemicalFormula;
+    private String chemicalFormula;
 
-    String description;
+    private String description;
 }
