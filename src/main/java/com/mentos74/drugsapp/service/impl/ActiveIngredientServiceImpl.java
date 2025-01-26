@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,13 +29,7 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
         api.setDescription(dto.getDescription());
         api.setNameActiveIngredient(dto.getNameActiveIngredient());
         api.setChemicalFormula(dto.getChemicalFormula());
-
-        try {
-            // Simpan file sebagai byte array ke database
-            api.setChemicalStructure(dto.getChemicalStructure().getBytes());
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to process file", e);
-        }
+        api.setChemicalStructure(dto.getChemicalStructure());
 
 
         activeINgredientRepository.save(api);
@@ -67,7 +62,13 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
             dto.setNameActiveIngredient(c.getNameActiveIngredient());
             dto.setDescription(c.getDescription());
             dto.setChemicalFormula(c.getChemicalFormula());
-//            dto.setChemicalStructure(c.getChemicalStructure());
+            // Decode Base64 to byte array
+            if (c.getChemicalStructure() != null && !c.getChemicalStructure().isEmpty()) {
+                byte[] decodedBytes = Base64.getDecoder().decode(c.getChemicalStructure());
+                dto.setChemicalStructure(new String(decodedBytes)); // Optional: Simpan hasil decode sebagai string
+            } else {
+                dto.setChemicalStructure(null); // Handle jika data kosong
+            }
             return dto;
         }).collect(Collectors.toList());
         return listResponse;

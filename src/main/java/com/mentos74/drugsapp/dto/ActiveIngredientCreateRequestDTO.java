@@ -24,5 +24,5 @@ public class ActiveIngredientCreateRequestDTO  implements Serializable {
 
     private String chemicalFormula;
 
-    private MultipartFile chemicalStructure;
+    private String chemicalStructure;
 }

@@ -17,10 +17,13 @@ public class ActiveIngredient {
 
     private String nameActiveIngredient;
 
-    @Lob // Menandai bahwa ini adalah data biner besar
-    private byte[] chemicalStructure;
+
+    @Column(columnDefinition = "text")
+    private String chemicalStructure;
+
 
     private String chemicalFormula;
 
+    @Column(columnDefinition = "text")
     private String description;
 }
