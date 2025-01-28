@@ -69,9 +69,12 @@ public class ActiveIngredientResource {
         return "redirect:/active-ingredient/list";
     }
 
+
+    //todo benerin edit nya, khususnya yang upload gambarnya cuy
     @GetMapping("/active-ingredient/edit/{id}")
     public String editActiveIngredient(@PathVariable Long id,Model model) {
         ActiveIngredientUpdateRequestDTO editActiveDTO = activeIngredientService.findActiveIngredientById(id);
+        System.out.println("bjir>>" + editActiveDTO.getChemicalStructure());
         model.addAttribute("dto", editActiveDTO);
         return "/ActiveIngredient/edit_activeIngredient";
     }
