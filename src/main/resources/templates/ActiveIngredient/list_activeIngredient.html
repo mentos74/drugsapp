@@ -28,7 +28,7 @@
     <td th:text="${iterStat.index + 1}"></td>
     <td th:text="${ingredient.nameActiveIngredient}"></td>
     <td>
-      <img th:src="@{/${ingredient.chemicalStructure}}" alt="Chemical Structure" style="max-width: 100px;">
+      <img th:src="'data:image/png;base64,' + ${ingredient.chemicalStructure}" alt="Chemical Structure" style="max-width: 100px;">
     </td>
     <td th:text="${ingredient.chemicalFormula}"></td>
     <td th:text="${ingredient.description}"></td>

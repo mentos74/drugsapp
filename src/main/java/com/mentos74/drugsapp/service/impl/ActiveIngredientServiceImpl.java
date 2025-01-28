@@ -42,7 +42,7 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
         api.setDescription(dto.getDescription());
         api.setNameActiveIngredient(dto.getNameActiveIngredient());
         api.setChemicalFormula(dto.getChemicalFormula());
-//        api.setChemicalStructure(dto.getChemicalStructure().getBytes());
+        api.setChemicalStructure(dto.getChemicalStructure());
 
         activeINgredientRepository.save(api);
 
@@ -62,13 +62,8 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
             dto.setNameActiveIngredient(c.getNameActiveIngredient());
             dto.setDescription(c.getDescription());
             dto.setChemicalFormula(c.getChemicalFormula());
-            // Decode Base64 to byte array
-            if (c.getChemicalStructure() != null && !c.getChemicalStructure().isEmpty()) {
-                byte[] decodedBytes = Base64.getDecoder().decode(c.getChemicalStructure());
-                dto.setChemicalStructure(new String(decodedBytes)); // Optional: Simpan hasil decode sebagai string
-            } else {
-                dto.setChemicalStructure(null); // Handle jika data kosong
-            }
+            dto.setChemicalStructure(c.getChemicalStructure());
+
             return dto;
         }).collect(Collectors.toList());
         return listResponse;
