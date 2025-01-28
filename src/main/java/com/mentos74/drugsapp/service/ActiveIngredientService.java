@@ -19,6 +19,6 @@ public interface ActiveIngredientService {
 
     public List<ActiveIngredientResponseRequestDTO> listActiveIngredient();
 
-    public CompanyUpdateRequestDTO findCompanyById(Long id);
+    public ActiveIngredientUpdateRequestDTO findActiveIngredientById(Long id);
 
 }

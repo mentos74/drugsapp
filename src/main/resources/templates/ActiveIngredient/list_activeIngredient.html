@@ -26,7 +26,10 @@
   <tbody>
   <tr th:each="ingredient, iterStat : ${listIngredients}">
     <td th:text="${iterStat.index + 1}"></td>
-    <td th:text="${ingredient.nameActiveIngredient}"></td>
+    <td>
+      <a th:href="'/active-ingredient/edit/' + ${ingredient.activeIngredientId}"
+         th:text="${ingredient.nameActiveIngredient}"></a>
+    </td>
     <td>
       <img th:src="'data:image/png;base64,' + ${ingredient.chemicalStructure}" alt="Chemical Structure" style="max-width: 100px;">
     </td>

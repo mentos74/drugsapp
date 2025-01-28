@@ -38,7 +38,8 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
     @Override
     public void updateActiveIngredient(ActiveIngredientUpdateRequestDTO dto) {
 
-        ActiveIngredient api = activeINgredientRepository.findById(dto.getActiveIngredientId()).orElseThrow();
+        ActiveIngredient api = activeINgredientRepository.findById(dto.getActiveIngredientId())
+                .orElseThrow(()-> new RuntimeException("id not found"));
         api.setDescription(dto.getDescription());
         api.setNameActiveIngredient(dto.getNameActiveIngredient());
         api.setChemicalFormula(dto.getChemicalFormula());
@@ -56,7 +57,7 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
     @Override
     public List<ActiveIngredientResponseRequestDTO> listActiveIngredient() {
 
-        List<ActiveIngredientResponseRequestDTO> listResponse = activeINgredientRepository.findAll().stream().map((c) -> {
+        return activeINgredientRepository.findAll().stream().map((c) -> {
             ActiveIngredientResponseRequestDTO dto = new ActiveIngredientResponseRequestDTO();
             dto.setActiveIngredientId(c.getActiveIngredientId());
             dto.setNameActiveIngredient(c.getNameActiveIngredient());
@@ -66,11 +67,22 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
 
             return dto;
         }).collect(Collectors.toList());
-        return listResponse;
     }
 
     @Override
-    public CompanyUpdateRequestDTO findCompanyById(Long id) {
-        return null;
+    public ActiveIngredientUpdateRequestDTO findActiveIngredientById(Long id) {
+        ActiveIngredient activeIngredient =  activeINgredientRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("id not found"));
+
+        ActiveIngredientUpdateRequestDTO dto = new ActiveIngredientUpdateRequestDTO();
+        dto.setActiveIngredientId(activeIngredient.getActiveIngredientId());
+        dto.setDescription(activeIngredient.getDescription());
+        dto.setNameActiveIngredient(activeIngredient.getNameActiveIngredient());
+        dto.setChemicalFormula(activeIngredient.getChemicalFormula());
+        dto.setChemicalStructure(activeIngredient.getChemicalStructure());
+
+        return dto;
     }
+
+
 }

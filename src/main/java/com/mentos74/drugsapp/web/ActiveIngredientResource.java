@@ -7,16 +7,15 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import com.mentos74.drugsapp.dto.ActiveIngredientUpdateRequestDTO;
 import com.mentos74.drugsapp.service.ActiveIngredientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Base64;
@@ -66,6 +65,41 @@ public class ActiveIngredientResource {
         }
 
         activeIngredientService.createNewActiveIngredient(addActiveDTO);
+
+        return "redirect:/active-ingredient/list";
+    }
+
+    @GetMapping("/active-ingredient/edit/{id}")
+    public String editActiveIngredient(@PathVariable Long id,Model model) {
+        ActiveIngredientUpdateRequestDTO editActiveDTO = activeIngredientService.findActiveIngredientById(id);
+        model.addAttribute("dto", editActiveDTO);
+        return "/ActiveIngredient/edit_activeIngredient";
+    }
+
+    @PostMapping("/active-ingredient/edit/{id}")
+    public String editActiveIngredientNew(@PathVariable Long id,
+            @ModelAttribute("dto") @Valid ActiveIngredientUpdateRequestDTO editActiveDTO,
+            BindingResult bindingResult,
+            @RequestParam("chemicalStructureFile") MultipartFile file,
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("dto", editActiveDTO);
+            return "/ActiveIngredient/edit_activeIngredient";
+        }
+
+        if (file != null && !file.isEmpty()) {
+            try {
+                String encodedFile = Base64.getEncoder().encodeToString(file.getBytes());
+                editActiveDTO.setChemicalStructure(encodedFile);
+            } catch (IOException e) {
+                bindingResult.rejectValue("chemicalStructure", "error.fileUpload", "Failed to process file.");
+                model.addAttribute("dto", editActiveDTO);
+                return "/ActiveIngredient/edit_activeIngredient";
+            }
+        }
+
+        activeIngredientService.updateActiveIngredient(editActiveDTO);
 
         return "redirect:/active-ingredient/list";
     }
