@@ -1,25 +1,27 @@
 package com.mentos74.drugsapp.entity;
 
+
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Table(name = "company")
+import java.io.Serial;
+import java.io.Serializable;
+
+@Table(name = "drug_class")
 @Data
 @Entity
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class Company {
+public class DrugClass  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long companyId;
+    private Long drugClassId;
 
-    private String companyName;
+    private String drugClassName;
 
-    private String companyAddress;
+    private String drugClassDescription;
 
-    private String companyEmail;
 
-    private String companyPhone;
 }
