@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,7 +52,6 @@ public class CompanyResource {
     @GetMapping("/company/edit/{id}")
     public String editNewPost(@PathVariable Long id, Model model) {
         CompanyUpdateRequestDTO companyUpdateRequestDTO = companyService.findCompanyById(id);
-        System.out.println("jirrrrr>>>"+companyUpdateRequestDTO.getCompanyEmail());
         model.addAttribute("companyUpdateRequestDTO", companyUpdateRequestDTO);
         return "/company/edit_company";
     }
@@ -71,6 +67,22 @@ public class CompanyResource {
 
         companyService.updateCompany(companyUpdateRequestDTO, id);
         return "redirect:/company/list";
+    }
+
+
+    @GetMapping("/company/delete/{id}")
+    public String deleteCompanyConfirmation(@PathVariable Long id, Model model) {
+
+        CompanyUpdateRequestDTO companyUpdateRequestDTO = companyService.findCompanyById(id);
+        model.addAttribute("companyUpdateRequestDTO", companyUpdateRequestDTO);
+        return "/company/delete_company";
+    }
+
+    @PostMapping("/company/delete/{id}")
+    public String deleteCompany(@PathVariable Long id,  Model model) {
+
+        companyService.deleteCompany(id);
+        return "redirect:/list";
     }
 
 

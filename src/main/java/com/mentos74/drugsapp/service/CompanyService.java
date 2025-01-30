@@ -19,6 +19,8 @@ public interface CompanyService {
 
     public CompanyUpdateRequestDTO findCompanyById(Long id);
 
+    public void deleteCompany(Long id);
+
 
 
 }

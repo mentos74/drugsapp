@@ -59,7 +59,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public CompanyUpdateRequestDTO findCompanyById(Long id) {
 
-        Company comp =  companyRepository.findById(id).orElseThrow();
+        Company comp = companyRepository.findById(id).orElseThrow();
 
         CompanyUpdateRequestDTO dto = new CompanyUpdateRequestDTO();
         dto.setCompanyPhone(comp.getCompanyPhone());
@@ -69,6 +69,15 @@ public class CompanyServiceImpl implements CompanyService {
         dto.setCompanyEmail(comp.getCompanyEmail());
 
         return dto;
+    }
+
+    @Override
+    public void deleteCompany(Long id) {
+
+        Company comp = companyRepository.findById(id).orElseThrow();
+        comp.setDeleted(true);
+
+        companyRepository.save(comp);
     }
 
 

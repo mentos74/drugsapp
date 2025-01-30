@@ -23,4 +23,6 @@ public class CompanyUpdateRequestDTO implements Serializable {
     String companyEmail;
 
     String companyPhone;
+
+    Boolean deleted;
 }

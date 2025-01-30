@@ -22,4 +22,7 @@ public class Company {
     private String companyEmail;
 
     private String companyPhone;
+
+    @Column(columnDefinition = "boolean default false")
+    private Boolean deleted;
 }
