@@ -70,19 +70,19 @@ public class CompanyResource {
     }
 
 
-    @GetMapping("/company/delete/{id}")
-    public String deleteCompanyConfirmation(@PathVariable Long id, Model model) {
-
-        CompanyUpdateRequestDTO companyUpdateRequestDTO = companyService.findCompanyById(id);
-        model.addAttribute("companyUpdateRequestDTO", companyUpdateRequestDTO);
-        return "/company/delete_company";
-    }
+//    @GetMapping("/company/delete/{id}")
+//    public String deleteCompanyConfirmation(@PathVariable Long id, Model model) {
+//
+//        CompanyUpdateRequestDTO companyUpdateRequestDTO = companyService.findCompanyById(id);
+//        model.addAttribute("companyUpdateRequestDTO", companyUpdateRequestDTO);
+//        return "/company/delete_company";
+//    }
 
     @PostMapping("/company/delete/{id}")
     public String deleteCompany(@PathVariable Long id,  Model model) {
-
+        System.out.println("masuk sini bjir");
         companyService.deleteCompany(id);
-        return "redirect:/list";
+        return "redirect:/company/list";
     }
 
 

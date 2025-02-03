@@ -44,7 +44,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<CompanyResponseRequestDTO> listCompany() {
-        return companyRepository.findAll().stream().map((c) -> {
+        return companyRepository.findByDeletedFalseOrderByCreatedAtDesc().stream().map((c) -> {
             CompanyResponseRequestDTO dto = new CompanyResponseRequestDTO();
             dto.setCompanyAddress(c.getCompanyAddress());
             dto.setCompanyEmail(c.getCompanyEmail());
@@ -78,6 +78,7 @@ public class CompanyServiceImpl implements CompanyService {
         comp.setDeleted(true);
 
         companyRepository.save(comp);
+        System.out.println("abis save bjir");
     }
 
 
