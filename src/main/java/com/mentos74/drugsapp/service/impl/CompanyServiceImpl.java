@@ -26,6 +26,8 @@ public class CompanyServiceImpl implements CompanyService {
         company.setCompanyEmail(dto.getCompanyEmail());
         company.setCompanyAddress(dto.getCompanyAddress());
         company.setCompanyPhone(dto.getCompanyPhone());
+        company.setDeleted(false);
+        company.prePersist();
 
         companyRepository.save(company);
     }
@@ -38,6 +40,7 @@ public class CompanyServiceImpl implements CompanyService {
         company.setCompanyEmail(dto.getCompanyEmail());
         company.setCompanyAddress(dto.getCompanyAddress());
         company.setCompanyPhone(dto.getCompanyPhone());
+        company.preUpdate();
 
         companyRepository.save(company);
     }

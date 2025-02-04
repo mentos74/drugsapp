@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Table(name = "company")
 @Data
 @Entity
@@ -23,6 +25,22 @@ public class Company {
 
     private String companyPhone;
 
+    private LocalDateTime createdAt;
+
+    private LocalDateTime modifiedAt;
+
     @Column(columnDefinition = "boolean default false")
     private Boolean deleted;
+
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.modifiedAt = LocalDateTime.now();
+    }
 }

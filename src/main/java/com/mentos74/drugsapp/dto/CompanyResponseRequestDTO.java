@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
@@ -23,4 +24,8 @@ public class CompanyResponseRequestDTO implements Serializable {
     String companyEmail;
 
     String companyPhone;
+
+    LocalDateTime createdAt;
+
+    LocalDateTime modifiedAt;
 }
