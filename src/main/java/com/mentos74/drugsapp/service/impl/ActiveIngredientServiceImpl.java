@@ -61,7 +61,7 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
     @Override
     public List<ActiveIngredientResponseRequestDTO> listActiveIngredient() {
 
-        return activeINgredientRepository.findByDeletedFalseOrderByUpdatedAt().stream().map((c) -> {
+        return activeINgredientRepository.findByDeletedFalseOrderByUpdatedAtDesc().stream().map((c) -> {
             ActiveIngredientResponseRequestDTO dto = new ActiveIngredientResponseRequestDTO();
             dto.setActiveIngredientId(c.getActiveIngredientId());
             dto.setNameActiveIngredient(c.getNameActiveIngredient());
