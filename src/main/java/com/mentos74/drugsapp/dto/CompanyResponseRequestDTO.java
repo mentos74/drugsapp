@@ -15,17 +15,17 @@ public class CompanyResponseRequestDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = -4250872747730385397L;
 
-    Long companyId;
+    private Long companyId;
 
-    String companyName;
+    private String companyName;
 
-    String companyAddress;
+    private String companyAddress;
 
-    String companyEmail;
+    private String companyEmail;
 
-    String companyPhone;
+    private String companyPhone;
 
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
-    LocalDateTime modifiedAt;
+    private LocalDateTime modifiedAt;
 }

@@ -15,10 +15,10 @@ public class DrugClassResponseRequestDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = 6076292711601726761L;
 
-    Long drugClassId;
+    private Long drugClassId;
 
-    String drugClassName;
+    private String drugClassName;
 
-    String drugClassDescription;
+    private String drugClassDescription;
 
 }

@@ -3,7 +3,6 @@ package com.mentos74.drugsapp.service;
 import com.mentos74.drugsapp.dto.CompanyCreateRequestDTO;
 import com.mentos74.drugsapp.dto.CompanyResponseRequestDTO;
 import com.mentos74.drugsapp.dto.CompanyUpdateRequestDTO;
-import com.mentos74.drugsapp.entity.Company;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

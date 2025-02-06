@@ -6,9 +6,6 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 @Table(name = "drug_class")
 @Data
 @Entity

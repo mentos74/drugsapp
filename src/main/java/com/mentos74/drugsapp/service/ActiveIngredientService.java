@@ -3,7 +3,6 @@ package com.mentos74.drugsapp.service;
 import com.mentos74.drugsapp.dto.ActiveIngredientCreateRequestDTO;
 import com.mentos74.drugsapp.dto.ActiveIngredientResponseRequestDTO;
 import com.mentos74.drugsapp.dto.ActiveIngredientUpdateRequestDTO;
-import com.mentos74.drugsapp.dto.CompanyUpdateRequestDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

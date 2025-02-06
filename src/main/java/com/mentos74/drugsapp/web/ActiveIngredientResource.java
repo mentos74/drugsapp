@@ -2,9 +2,7 @@ package com.mentos74.drugsapp.web;
 
 import com.mentos74.drugsapp.dto.ActiveIngredientCreateRequestDTO;
 import com.mentos74.drugsapp.dto.ActiveIngredientResponseRequestDTO;
-
 import java.io.IOException;
-
 import com.mentos74.drugsapp.dto.ActiveIngredientUpdateRequestDTO;
 import com.mentos74.drugsapp.service.ActiveIngredientService;
 import jakarta.validation.Valid;

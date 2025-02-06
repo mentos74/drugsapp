@@ -5,5 +5,5 @@ import com.mentos74.drugsapp.entity.Drugs;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DrugsService  {
-//    public DrusgsResponseDTO findById(String id);
+
 }

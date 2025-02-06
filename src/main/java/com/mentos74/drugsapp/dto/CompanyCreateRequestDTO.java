@@ -15,15 +15,13 @@ public class CompanyCreateRequestDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = -2659293516029213903L;
 
-    String companyName;
+    private String companyName;
 
-    String companyAddress;
+    private String companyAddress;
 
-    String companyEmail;
+    private String companyEmail;
 
-    String companyPhone;
-
-
+    private String companyPhone;
 
 
 }
