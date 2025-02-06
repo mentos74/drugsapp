@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ActiveIngredientRepository extends JpaRepository<ActiveIngredient, Long> {
 
-    List<ActiveIngredient> findByDeletedOrderByUpdatedAt();
+    List<ActiveIngredient> findByDeletedFalseOrderByUpdatedAt();
 
 }

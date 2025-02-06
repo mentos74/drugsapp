@@ -4,9 +4,6 @@ import com.mentos74.drugsapp.dto.ActiveIngredientCreateRequestDTO;
 import com.mentos74.drugsapp.dto.ActiveIngredientResponseRequestDTO;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import com.mentos74.drugsapp.dto.ActiveIngredientUpdateRequestDTO;
 import com.mentos74.drugsapp.service.ActiveIngredientService;
@@ -73,7 +70,6 @@ public class ActiveIngredientResource {
     @GetMapping("/active-ingredient/edit/{id}")
     public String editActiveIngredient(@PathVariable Long id,Model model) {
         ActiveIngredientUpdateRequestDTO editActiveDTO = activeIngredientService.findActiveIngredientById(id);
-        System.out.println("bjir>>" + editActiveDTO.getChemicalStructure());
         model.addAttribute("dto", editActiveDTO);
         return "/ActiveIngredient/edit_activeIngredient";
     }
@@ -107,11 +103,11 @@ public class ActiveIngredientResource {
     }
 
 
-    @PostMapping("/active-ingredient")
+    @PostMapping("/active-ingredient/delete/{id}")
     public String deleteActiveIngredient(@PathVariable Long id){
 
         activeIngredientService.deleteActiveIngredient(id);
 
-        return "/ActiveIngredient/edit_activeIngredient";
+        return "redirect:/active-ingredient/list";
     }
 }

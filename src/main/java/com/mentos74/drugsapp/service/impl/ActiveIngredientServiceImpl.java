@@ -3,15 +3,11 @@ package com.mentos74.drugsapp.service.impl;
 import com.mentos74.drugsapp.dto.ActiveIngredientCreateRequestDTO;
 import com.mentos74.drugsapp.dto.ActiveIngredientResponseRequestDTO;
 import com.mentos74.drugsapp.dto.ActiveIngredientUpdateRequestDTO;
-import com.mentos74.drugsapp.dto.CompanyUpdateRequestDTO;
 import com.mentos74.drugsapp.entity.ActiveIngredient;
 import com.mentos74.drugsapp.repository.ActiveIngredientRepository;
 import com.mentos74.drugsapp.service.ActiveIngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +26,8 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
         api.setNameActiveIngredient(dto.getNameActiveIngredient());
         api.setChemicalFormula(dto.getChemicalFormula());
         api.setChemicalStructure(dto.getChemicalStructure());
+        api.setDeleted(false);
+        api.prePersist();
 
 
         activeINgredientRepository.save(api);
@@ -39,11 +37,12 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
     public void updateActiveIngredient(ActiveIngredientUpdateRequestDTO dto) {
 
         ActiveIngredient api = activeINgredientRepository.findById(dto.getActiveIngredientId())
-                .orElseThrow(()-> new RuntimeException("id not found"));
-        api.setDescription(dto.getDescription());
-        api.setNameActiveIngredient(dto.getNameActiveIngredient());
-        api.setChemicalFormula(dto.getChemicalFormula());
-        api.setChemicalStructure(dto.getChemicalStructure());
+                .orElseThrow(() -> new RuntimeException("id not found"));
+        api.setDescription(dto.getDescription() != null ? dto.getDescription() : api.getDescription());
+        api.setNameActiveIngredient(dto.getNameActiveIngredient()!=null ? dto.getNameActiveIngredient(): api.getNameActiveIngredient());
+        api.setChemicalFormula(dto.getChemicalFormula()!=null ? dto.getChemicalFormula() : api.getChemicalFormula());
+        api.setChemicalStructure(dto.getChemicalStructure()!=null ? dto.getChemicalStructure() : api.getChemicalStructure());
+        api.preUpdate();
 
         activeINgredientRepository.save(api);
 
@@ -62,7 +61,7 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
     @Override
     public List<ActiveIngredientResponseRequestDTO> listActiveIngredient() {
 
-        return activeINgredientRepository.findAll().stream().map((c) -> {
+        return activeINgredientRepository.findByDeletedFalseOrderByUpdatedAt().stream().map((c) -> {
             ActiveIngredientResponseRequestDTO dto = new ActiveIngredientResponseRequestDTO();
             dto.setActiveIngredientId(c.getActiveIngredientId());
             dto.setNameActiveIngredient(c.getNameActiveIngredient());
