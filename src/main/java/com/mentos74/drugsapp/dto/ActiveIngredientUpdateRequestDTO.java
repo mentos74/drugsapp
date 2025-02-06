@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Data
@@ -22,4 +23,10 @@ public class ActiveIngredientUpdateRequestDTO implements Serializable {
     private String chemicalFormula;
 
     private String chemicalStructure;
+
+    private Boolean deleted;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 }

@@ -47,7 +47,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<CompanyResponseRequestDTO> listCompany() {
-        return companyRepository.findByDeletedFalseOrderByCreatedAtDesc().stream().map((c) -> {
+        return companyRepository.findByDeletedFalseOrderByUpdatedAtDesc().stream().map((c) -> {
             CompanyResponseRequestDTO dto = new CompanyResponseRequestDTO();
             dto.setCompanyAddress(c.getCompanyAddress());
             dto.setCompanyEmail(c.getCompanyEmail());

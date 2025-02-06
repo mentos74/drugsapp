@@ -27,7 +27,7 @@ public class Company {
 
     private LocalDateTime createdAt;
 
-    private LocalDateTime modifiedAt;
+    private LocalDateTime updatedAt;
 
     @Column(columnDefinition = "boolean default false")
     private Boolean deleted;
@@ -36,11 +36,11 @@ public class Company {
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
-        this.modifiedAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.modifiedAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 }

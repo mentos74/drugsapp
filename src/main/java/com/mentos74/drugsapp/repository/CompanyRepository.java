@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 
-    List<Company> findByDeletedFalseOrderByCreatedAtDesc();
+    List<Company> findByDeletedFalseOrderByUpdatedAtDesc();
 
 }

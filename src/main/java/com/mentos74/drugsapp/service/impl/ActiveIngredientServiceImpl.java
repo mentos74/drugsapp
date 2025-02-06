@@ -5,7 +5,7 @@ import com.mentos74.drugsapp.dto.ActiveIngredientResponseRequestDTO;
 import com.mentos74.drugsapp.dto.ActiveIngredientUpdateRequestDTO;
 import com.mentos74.drugsapp.dto.CompanyUpdateRequestDTO;
 import com.mentos74.drugsapp.entity.ActiveIngredient;
-import com.mentos74.drugsapp.repository.ActiveINgredientRepository;
+import com.mentos74.drugsapp.repository.ActiveIngredientRepository;
 import com.mentos74.drugsapp.service.ActiveIngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class ActiveIngredientServiceImpl implements ActiveIngredientService {
 
     @Autowired
-    ActiveINgredientRepository activeINgredientRepository;
+    ActiveIngredientRepository activeINgredientRepository;
 
 
     @Override
@@ -51,6 +51,11 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
 
     @Override
     public void deleteActiveIngredient(Long id) {
+
+        ActiveIngredient activeIngredient = activeINgredientRepository.findById(id).orElseThrow();
+        activeIngredient.setDeleted(true);
+
+        activeINgredientRepository.save(activeIngredient);
 
     }
 

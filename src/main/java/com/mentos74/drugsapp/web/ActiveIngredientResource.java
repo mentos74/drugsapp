@@ -70,7 +70,6 @@ public class ActiveIngredientResource {
     }
 
 
-    //todo benerin edit nya, khususnya yang upload gambarnya cuy
     @GetMapping("/active-ingredient/edit/{id}")
     public String editActiveIngredient(@PathVariable Long id,Model model) {
         ActiveIngredientUpdateRequestDTO editActiveDTO = activeIngredientService.findActiveIngredientById(id);
@@ -105,5 +104,14 @@ public class ActiveIngredientResource {
         activeIngredientService.updateActiveIngredient(editActiveDTO);
 
         return "redirect:/active-ingredient/list";
+    }
+
+
+    @PostMapping("/active-ingredient")
+    public String deleteActiveIngredient(@PathVariable Long id){
+
+        activeIngredientService.deleteActiveIngredient(id);
+
+        return "/ActiveIngredient/edit_activeIngredient";
     }
 }

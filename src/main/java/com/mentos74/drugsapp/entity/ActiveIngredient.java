@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+
 @Table(name = "active_ingredient")
 @Data
 @Entity
@@ -26,4 +28,21 @@ public class ActiveIngredient {
 
     @Column(columnDefinition = "text")
     private String description;
+
+    private Boolean deleted;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }
