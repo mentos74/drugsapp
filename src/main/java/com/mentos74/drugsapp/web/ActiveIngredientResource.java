@@ -26,14 +26,14 @@ public class ActiveIngredientResource {
     public String listActiveIngredients(Model model) {
         List<ActiveIngredientResponseRequestDTO> listIngredients = activeIngredientService.listActiveIngredient();
         model.addAttribute("listIngredients", listIngredients);
-        return "/ActiveIngredient/list_activeIngredient";
+        return "/active_ingredient/list_activeIngredient";
     }
 
     @GetMapping("/active-ingredient/add")
     public String addActiveIngredient(Model model) {
         ActiveIngredientCreateRequestDTO addActiveDTO = new ActiveIngredientCreateRequestDTO();
         model.addAttribute("dto", addActiveDTO);
-        return "/ActiveIngredient/add_activeIngredient";
+        return "/active_ingredient/add_activeIngredient";
     }
 
     @PostMapping("/active-ingredient/add")
@@ -45,7 +45,7 @@ public class ActiveIngredientResource {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("dto", addActiveDTO);
-            return "/ActiveIngredient/add_activeIngredient";
+            return "/active_ingredient/add_activeIngredient";
         }
 
         if (file != null && !file.isEmpty()) {
@@ -55,7 +55,7 @@ public class ActiveIngredientResource {
             } catch (IOException e) {
                 bindingResult.rejectValue("chemicalStructure", "error.fileUpload", "Failed to process file.");
                 model.addAttribute("dto", addActiveDTO);
-                return "/ActiveIngredient/add_activeIngredient";
+                return "/active_ingredient/add_activeIngredient";
             }
         }
 
@@ -69,7 +69,7 @@ public class ActiveIngredientResource {
     public String editActiveIngredient(@PathVariable Long id,Model model) {
         ActiveIngredientUpdateRequestDTO editActiveDTO = activeIngredientService.findActiveIngredientById(id);
         model.addAttribute("dto", editActiveDTO);
-        return "/ActiveIngredient/edit_activeIngredient";
+        return "/active_ingredient/edit_activeIngredient";
     }
 
     @PostMapping("/active-ingredient/edit/{id}")
@@ -81,7 +81,7 @@ public class ActiveIngredientResource {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("dto", editActiveDTO);
-            return "/ActiveIngredient/edit_activeIngredient";
+            return "/active_ingredient/edit_activeIngredient";
         }
 
         if (file != null && !file.isEmpty()) {
@@ -91,7 +91,7 @@ public class ActiveIngredientResource {
             } catch (IOException e) {
                 bindingResult.rejectValue("chemicalStructure", "error.fileUpload", "Failed to process file.");
                 model.addAttribute("dto", editActiveDTO);
-                return "/ActiveIngredient/edit_activeIngredient";
+                return "/active_ingredient/edit_activeIngredient";
             }
         }
 

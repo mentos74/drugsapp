@@ -21,4 +21,6 @@ public class DrugClassResponseRequestDTO implements Serializable {
 
     private String drugClassDescription;
 
+    private Boolean deleted;
+
 }

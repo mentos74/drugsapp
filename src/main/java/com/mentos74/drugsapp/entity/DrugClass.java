@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Table(name = "drug_class")
 @Data
 @Entity
@@ -19,6 +21,13 @@ public class DrugClass  {
     private String drugClassName;
 
     private String drugClassDescription;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    @Column(columnDefinition = "boolean default false")
+    private Boolean deleted;
 
 
 }
