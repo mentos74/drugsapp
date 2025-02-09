@@ -29,5 +29,16 @@ public class DrugClass  {
     @Column(columnDefinition = "boolean default false")
     private Boolean deleted;
 
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
 
 }
