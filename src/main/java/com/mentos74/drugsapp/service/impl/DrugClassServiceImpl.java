@@ -66,7 +66,15 @@ public class DrugClassServiceImpl implements DrugClassSevice {
 
     @Override
     public DrugClassUpdateRequestDTO findDrugClassById(Long id) {
-        return null;
+
+        DrugClass drugClass = drugClassRepository.findById(id).orElseThrow();
+        DrugClassUpdateRequestDTO drugClassUpdateRequestDTO = new DrugClassUpdateRequestDTO();
+        drugClassUpdateRequestDTO.setDeleted(drugClass.getDeleted());
+        drugClassUpdateRequestDTO.setDrugClassDescription(drugClass.getDrugClassDescription());
+        drugClassUpdateRequestDTO.setDrugClassName(drugClass.getDrugClassName());
+        drugClassUpdateRequestDTO.setDrugClassId(drugClass.getDrugClassId());
+
+        return drugClassUpdateRequestDTO;
     }
 
 

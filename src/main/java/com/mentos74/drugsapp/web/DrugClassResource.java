@@ -72,7 +72,7 @@ public class DrugClassResource {
         }
 
         drugClassSevice.updateDrugClass(drugClassUpdateRequestDTO, id);
-        return "redirect:/drug_class/list";
+        return "redirect:/drug-class/list";
     }
 
 
