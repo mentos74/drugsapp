@@ -9,6 +9,16 @@
 <body class="container mt-5">
 <h1 class="mb-4 text-center" th:text="${pageTitle}">Edit Drug Class</h1>
 
+<div class="d-flex justify-content-end gap-2 align-items-center mt-3">
+
+    <form method="POST" th:action="@{'/drug-class/delete/' + ${dto.drugClassId}}"
+          class="d-inline-block" onsubmit="return confirm('Are you sure you want to delete this drug class?');">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+
+
+</div>
+
 <form method="POST" th:action="@{'/drug-class/edit/' + ${dto.drugClassId}}"
       th:object="${dto}" class="needs-validation" novalidate>
 
@@ -26,7 +36,7 @@
 
     <div class="d-flex justify-content-end mb-3">
         <button type="submit" class="btn btn-primary ms-2">Save</button>
-        <a href="/drugclass/list" class="btn btn-secondary ms-2">Cancel</a>
+        <a href="/drug-class/list" class="btn btn-secondary ms-2">Cancel</a>
     </div>
 </form>
 </body>

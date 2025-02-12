@@ -53,7 +53,7 @@ public class DrugClassServiceImpl implements DrugClassSevice {
 
     @Override
     public List<DrugClassResponseRequestDTO> listDrugClass() {
-        return drugClassRepository.findAll().stream().map((c) -> {
+        return drugClassRepository.findByDeletedFalseOrderByUpdatedAtDesc().stream().map((c) -> {
                     DrugClassResponseRequestDTO dto = new DrugClassResponseRequestDTO();
                     dto.setDrugClassId(c.getDrugClassId());
                     dto.setDrugClassDescription(c.getDrugClassDescription());

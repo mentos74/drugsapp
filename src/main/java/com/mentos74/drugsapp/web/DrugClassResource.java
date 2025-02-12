@@ -79,7 +79,7 @@ public class DrugClassResource {
     @PostMapping("/drug-class/delete/{id}")
     public String deleteDrugClass(@PathVariable Long id) {
         drugClassSevice.deleteDrugClass(id);
-        return "redirect:/drug_class/list";
+        return "redirect:/drug-class/list";
     }
 
 
