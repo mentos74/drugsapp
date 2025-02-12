@@ -50,14 +50,14 @@ public class CompanyResource {
 
 
     @GetMapping("/company/edit/{id}")
-    public String editNewPost(@PathVariable Long id, Model model) {
+    public String editCompanyNew(@PathVariable Long id, Model model) {
         CompanyUpdateRequestDTO companyUpdateRequestDTO = companyService.findCompanyById(id);
         model.addAttribute("companyUpdateRequestDTO", companyUpdateRequestDTO);
         return "/company/edit_company";
     }
 
     @PostMapping("/company/edit/{id}")
-    public String updatePost(@PathVariable Long id,
+    public String editCompany(@PathVariable Long id,
                              @ModelAttribute("companyUpdateRequestDTO") @Valid CompanyUpdateRequestDTO companyUpdateRequestDTO,
                              BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {

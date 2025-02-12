@@ -17,6 +17,6 @@ public interface DrugClassSevice {
 
     public List<DrugClassResponseRequestDTO> listDrugClass();
 
-    public DrugClassUpdateRequestDTO findCompanyById(Long id);
+    public DrugClassUpdateRequestDTO findDrugClassById(Long id);
 
 }

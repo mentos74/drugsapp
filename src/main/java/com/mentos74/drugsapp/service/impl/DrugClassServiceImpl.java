@@ -33,10 +33,21 @@ public class DrugClassServiceImpl implements DrugClassSevice {
     @Override
     public void updateDrugClass(DrugClassUpdateRequestDTO dto, Long id) {
 
+        DrugClass drugClass = drugClassRepository.findById(id).orElseThrow();
+        drugClass.setDrugClassName(dto.getDrugClassName());
+        drugClass.setDrugClassDescription(dto.getDrugClassDescription());
+        drugClass.preUpdate();
+
+        drugClassRepository.save(drugClass);
     }
 
     @Override
     public void deleteDrugClass(Long id) {
+        DrugClass drugClass = drugClassRepository.findById(id).orElseThrow();
+        drugClass.setDeleted(true);
+        drugClass.preUpdate();
+
+        drugClassRepository.save(drugClass);
 
     }
 
@@ -54,7 +65,9 @@ public class DrugClassServiceImpl implements DrugClassSevice {
     }
 
     @Override
-    public DrugClassUpdateRequestDTO findCompanyById(Long id) {
+    public DrugClassUpdateRequestDTO findDrugClassById(Long id) {
         return null;
     }
+
+
 }
