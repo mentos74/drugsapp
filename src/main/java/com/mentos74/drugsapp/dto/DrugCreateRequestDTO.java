@@ -8,9 +8,9 @@ import java.util.List;
 
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class DrugsCreateRequestDTO {
+public class DrugCreateRequestDTO {
 
-    String drugsName;
+    String drugName;
     String company;
     List<String> ingredients;
     String indication;
