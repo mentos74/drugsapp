@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.io.Serial;
 import java.io.Serializable;
@@ -34,7 +36,6 @@ public class Drug implements Serializable {
     String description;
 
 
-    /** Relasi ke Active Ingredients (Many-to-Many) **/
     @ManyToMany
     @JoinTable(
             name = "drug_ingredients",
@@ -43,7 +44,7 @@ public class Drug implements Serializable {
     )
     private Set<ActiveIngredient> activeIngredients;
 
-    /** Relasi ke Drug Class (Many-to-Many) **/
+
     @ManyToMany
     @JoinTable(
             name = "drug_classifications",
@@ -52,9 +53,28 @@ public class Drug implements Serializable {
     )
     private Set<DrugClass> drugClasses;
 
-    /** Relasi ke Company (Many-to-One) **/
+
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    @Column(columnDefinition = "boolean default false")
+    private Boolean deleted;
+
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 
 }
