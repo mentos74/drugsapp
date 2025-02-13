@@ -1,6 +1,7 @@
 package com.mentos74.drugsapp.service.impl;
 
 
+import com.mentos74.drugsapp.dto.DrugCreateRequestDTO;
 import com.mentos74.drugsapp.dto.DrugResponseRequestDTO;
 import com.mentos74.drugsapp.dto.DrugUpdateRequestDTO;
 import com.mentos74.drugsapp.entity.Drug;
@@ -20,17 +21,17 @@ public class DrugServiceImpl implements DrugService {
     // di drug resource sama jangan lupa di tambahin dan cek add edit listnya
 
     @Override
-    public void createDrug(Drug drug, List<Long> activeIngredientIds, List<Long> drugClassIds, Long companyId) {
+    public void createDrug(DrugCreateRequestDTO drugCreateRequestDTO, List<Long> activeIngredientIds, List<Long> drugClassIds, Long companyId) {
 
     }
 
     @Override
-    public void updateDrug(Drug drug, List<Long> activeIngredientIds, List<Long> drugClassIds, Long companyId) {
+    public void updateDrug(DrugUpdateRequestDTO drugUpdateRequestDTO, List<Long> activeIngredientIds, List<Long> drugClassIds, Long companyId) {
 
     }
 
     @Override
-    public List<DrugResponseRequestDTO> listCompany() {
+    public List<DrugResponseRequestDTO> listDrugs() {
         return List.of();
     }
 
