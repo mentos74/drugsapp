@@ -22,5 +22,9 @@ public interface DrugService {
 
     public List<DrugClassResponseRequestDTO> listDrugClass();
 
+    public List<ActiveIngredientResponseRequestDTO> listActiveIngredient();
+
+
+
 }
 

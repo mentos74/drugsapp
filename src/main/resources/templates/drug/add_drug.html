@@ -4,6 +4,9 @@
 <head>
     <title>Add Drug</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 </head>
 
 <body class="container mt-5">
@@ -47,12 +50,14 @@
 
     <div class="col-md-6">
         <label for="drugClasses" class="form-label">Drug Classes</label>
-        <select class="form-select" id="drugClasses" name="drugClasses" multiple required>
+        <select class="form-select drug-classes-select" id="drugClasses" name="drugClasses" multiple>
             <option th:each="drugClass : ${drugClasses}"
                     th:value="${drugClass.drugClassId}"
-                    th:text="${drugClass.drugClassName}"></option>
+                    th:text="${drugClass.drugClassName}">
+            </option>
         </select>
     </div>
+
 
 
     <div class="col-md-6">
@@ -71,6 +76,15 @@
         <a href="/drugs/list" class="btn btn-secondary ms-2">Back to List</a>
     </div>
 </form>
+
+<script>
+    $(document).ready(function() {
+        $('.drug-classes-select').select2({
+            placeholder: "Select Drug Classes",
+            allowClear: true
+        });
+    });
+</script>
 
 </body>
 </html>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -31,11 +32,15 @@ public class DrugResource {
     @GetMapping("/drug/add")
     public String addDrug(Model model) {
         DrugCreateRequestDTO dto = new DrugCreateRequestDTO();
+        dto.setDrugClasses(Collections.emptySet());
+        dto.setActiveIngredients(Collections.emptySet());
         model.addAttribute("companies", drugService.listCompany());
         model.addAttribute("drugClasses", drugService.listDrugClass());
+        model.addAttribute("activeIngredients", drugService.list());
         model.addAttribute("dto", dto);
         return "/drug/add_drug";
     }
+
 
     @PostMapping("/drug/add")
     public String addNewDrug(@ModelAttribute("dto") @Valid DrugCreateRequestDTO dto,
