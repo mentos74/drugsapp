@@ -5,7 +5,7 @@ import com.mentos74.drugsapp.dto.DrugClassResponseRequestDTO;
 import com.mentos74.drugsapp.dto.DrugClassUpdateRequestDTO;
 import com.mentos74.drugsapp.entity.DrugClass;
 import com.mentos74.drugsapp.repository.DrugClassRepository;
-import com.mentos74.drugsapp.service.DrugClassSevice;
+import com.mentos74.drugsapp.service.DrugClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class DrugClassServiceImpl implements DrugClassSevice {
+public class DrugClassServiceImpl implements DrugClassService {
 
     @Autowired
     DrugClassRepository drugClassRepository;

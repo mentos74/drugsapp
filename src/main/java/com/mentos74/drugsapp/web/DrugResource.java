@@ -1,7 +1,5 @@
 package com.mentos74.drugsapp.web;
 
-import com.mentos74.drugsapp.dto.CompanyCreateRequestDTO;
-import com.mentos74.drugsapp.dto.CompanyResponseRequestDTO;
 import com.mentos74.drugsapp.dto.DrugCreateRequestDTO;
 import com.mentos74.drugsapp.dto.DrugResponseRequestDTO;
 import com.mentos74.drugsapp.service.DrugService;
@@ -33,7 +31,9 @@ public class DrugResource {
     @GetMapping("/drug/add")
     public String addDrug(Model model) {
         DrugCreateRequestDTO dto = new DrugCreateRequestDTO();
-        model.addAttribute("dto =", dto);
+        model.addAttribute("companies", drugService.listCompany());
+        model.addAttribute("drugClasses", drugService.listDrugClass());
+        model.addAttribute("dto", dto);
         return "/drug/add_drug";
     }
 

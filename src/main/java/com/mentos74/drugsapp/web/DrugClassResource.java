@@ -3,7 +3,7 @@ package com.mentos74.drugsapp.web;
 import com.mentos74.drugsapp.dto.DrugClassCreateRequestDTO;
 import com.mentos74.drugsapp.dto.DrugClassResponseRequestDTO;
 import com.mentos74.drugsapp.dto.DrugClassUpdateRequestDTO;
-import com.mentos74.drugsapp.service.DrugClassSevice;
+import com.mentos74.drugsapp.service.DrugClassService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ import java.util.List;
 public class DrugClassResource {
 
     @Autowired
-    DrugClassSevice drugClassSevice;
+    DrugClassService drugClassSevice;
 
 
     @GetMapping("/drug-class/list")

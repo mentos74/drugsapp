@@ -1,9 +1,7 @@
 package com.mentos74.drugsapp.service;
 
 
-import com.mentos74.drugsapp.dto.DrugCreateRequestDTO;
-import com.mentos74.drugsapp.dto.DrugResponseRequestDTO;
-import com.mentos74.drugsapp.dto.DrugUpdateRequestDTO;
+import com.mentos74.drugsapp.dto.*;
 import com.mentos74.drugsapp.entity.Drug;
 
 import java.util.List;
@@ -19,6 +17,10 @@ public interface DrugService {
     public DrugUpdateRequestDTO findById();
 
     public void deleteDrug(Long id);
+
+    public List<CompanyResponseRequestDTO> listCompany();
+
+    public List<DrugClassResponseRequestDTO> listDrugClass();
 
 }
 
