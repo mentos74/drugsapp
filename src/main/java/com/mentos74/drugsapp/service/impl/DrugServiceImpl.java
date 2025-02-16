@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,6 +60,7 @@ public class DrugServiceImpl implements DrugService {
         drug.setIndication(drugCreateRequestDTO.getIndication());
         drug.setContraIndication(drugCreateRequestDTO.getContraIndication());
         drug.setDescription(drugCreateRequestDTO.getDescription());
+        drug.setDeleted(false);
 
 
         if (drugClassIds != null) {
@@ -78,8 +80,8 @@ public class DrugServiceImpl implements DrugService {
         } else {
             drug.setDrugClasses(new HashSet<>());
         }
-
-        drug.setCompany(companyRepository.findById(companyId).orElse(null));
+        System.out.println("jir>"+companyId);
+        drug.setCompany(companyRepository.findById(drugCreateRequestDTO.getCompany().getCompanyId()).orElse(null));
         drugRepository.save(drug);
     }
 
@@ -90,7 +92,19 @@ public class DrugServiceImpl implements DrugService {
 
     @Override
     public List<DrugResponseRequestDTO> listDrugs() {
-        return List.of();
+        return drugRepository.findByDeletedFalseOrderByUpdatedAtDesc().stream().map((s)->{
+            DrugResponseRequestDTO dto = new DrugResponseRequestDTO();
+            dto.setDrugId(s.getDrugId());
+            dto.setDrugName(s.getDrugName());
+            dto.setDrugClasses(s.getDrugClasses());
+            dto.setCompany(s.getCompany());
+            dto.setDescription(s.getDescription());
+            dto.setActiveIngredients(s.getActiveIngredients());
+            dto.setIndication(s.getIndication());
+            dto.setContraIndication(s.getContraIndication());
+
+            return dto;
+        }).collect(Collectors.toList());
     }
 
     @Override

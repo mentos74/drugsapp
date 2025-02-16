@@ -24,6 +24,7 @@ public class DrugResource {
     @GetMapping("/drug/list")
     public String listDrug(Model model) {
         List<DrugResponseRequestDTO> listDrugs = drugService.listDrugs();
+        System.out.println("bjir>>"+listDrugs.size());
         model.addAttribute("listDrugs", listDrugs);
         return "/drug/list_drug";
     }
