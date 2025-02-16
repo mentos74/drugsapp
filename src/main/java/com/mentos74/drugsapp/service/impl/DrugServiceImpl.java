@@ -115,6 +115,6 @@ public class DrugServiceImpl implements DrugService {
 
     @Override
     public List<ActiveIngredientResponseRequestDTO> listActiveIngredient() {
-        return List.of();
+        return activeIngredientService.listActiveIngredient();
     }
 }
