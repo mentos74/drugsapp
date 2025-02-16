@@ -36,7 +36,7 @@ public class DrugResource {
         dto.setActiveIngredients(Collections.emptySet());
         model.addAttribute("companies", drugService.listCompany());
         model.addAttribute("drugClasses", drugService.listDrugClass());
-        model.addAttribute("activeIngredients", drugService.list());
+        model.addAttribute("activeIngredients", drugService.listActiveIngredient());
         model.addAttribute("dto", dto);
         return "/drug/add_drug";
     }
