@@ -2,9 +2,7 @@ package com.mentos74.drugsapp.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.mentos74.drugsapp.entity.ActiveIngredient;
 import com.mentos74.drugsapp.entity.Company;
-import com.mentos74.drugsapp.entity.DrugClass;
 import lombok.Data;
 
 import java.util.List;
@@ -24,9 +22,9 @@ public class DrugCreateRequestDTO {
 
     private String description;
 
-    private Set<DrugClass> drugClasses;
+    private Set<Long> activeIngredients;
 
-    private Set<ActiveIngredient> activeIngredients;
+    private Set<Long> drugClasses;
 
     private Company company;
 

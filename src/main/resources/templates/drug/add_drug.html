@@ -15,8 +15,8 @@
 <form action="/drug/add" method="post" class="row g-3">
 
     <div class="col-md-16">
-        <label for="drugsName" class="form-label">Drug Name</label>
-        <input type="text" class="form-control" id="drugsName" name="drugsName" required>
+        <label for="drugName" class="form-label">Drug Name</label>
+        <input type="text" class="form-control" id="drugName" name="drugName" required>
     </div>
 
 
@@ -40,7 +40,7 @@
 
     <div class="col-md-6">
         <label for="activeIngredients" class="form-label">Active Ingredients</label>
-        <select class="form-select active-ingredients-select" id="activeIngredients" name="activeIngredients" multiple>
+        <select class="form-select active-ingredients-select" id="activeIngredients" name="activeIngredients[]" multiple>
             <option th:each="activeIngredient : ${activeIngredients}"
                     th:value="${activeIngredient.activeIngredientId}"
                     th:text="${activeIngredient.nameActiveIngredient}">
@@ -51,7 +51,7 @@
 
     <div class="col-md-6">
         <label for="drugClasses" class="form-label">Drug Classes</label>
-        <select class="form-select drug-classes-select" id="drugClasses" name="drugClasses" multiple>
+        <select class="form-select drug-classes-select" id="drugClasses" name="drugClasses[]" multiple>
             <option th:each="drugClass : ${drugClasses}"
                     th:value="${drugClass.drugClassId}"
                     th:text="${drugClass.drugClassName}">

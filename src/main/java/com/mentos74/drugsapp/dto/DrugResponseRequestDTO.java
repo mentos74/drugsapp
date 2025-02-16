@@ -4,8 +4,6 @@ import com.mentos74.drugsapp.entity.ActiveIngredient;
 import com.mentos74.drugsapp.entity.Company;
 import com.mentos74.drugsapp.entity.DrugClass;
 import lombok.Data;
-
-import java.util.List;
 import java.util.Set;
 
 @Data

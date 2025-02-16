@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.List;
@@ -45,13 +46,16 @@ public class DrugResource {
 
     @PostMapping("/drug/add")
     public String addNewDrug(@ModelAttribute("dto") @Valid DrugCreateRequestDTO dto,
-                                BindingResult bindingResult, Model model) {
+                             @RequestParam(value = "activeIngredients", required = false) List<Long> activeIngredientIds,
+                             @RequestParam(value = "drugClasses", required = false) List<Long> drugClassIds,
+                             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("dto", dto);
             return "/drug/add_drug";
         }
-        drugService.createDrug(dto,null,null,null);
+        drugService.createDrug(dto, activeIngredientIds, drugClassIds, dto.getCompany().getCompanyId());
         return "redirect:/drug/list";
     }
+
 
 }

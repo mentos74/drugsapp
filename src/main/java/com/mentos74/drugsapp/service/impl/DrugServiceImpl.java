@@ -16,8 +16,6 @@ import com.mentos74.drugsapp.service.DrugClassService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -50,8 +48,6 @@ public class DrugServiceImpl implements DrugService {
     ActiveIngredientService activeIngredientService;
 
 
-    //todo tambahin fungsi di service impl dan juga bikin fungsi
-    // di drug resource sama jangan lupa di tambahin dan cek add edit listnya
 
     @Override
     public void createDrug(DrugCreateRequestDTO drugCreateRequestDTO, List<Long> activeIngredientIds, List<Long> drugClassIds, Long companyId) {
@@ -78,9 +74,10 @@ public class DrugServiceImpl implements DrugService {
                     .collect(Collectors.toSet());
             drug.setActiveIngredients(selectedActiveIngredients);
         } else {
-            drug.setDrugClasses(new HashSet<>());
+            drug.setActiveIngredients(new HashSet<>());
         }
-        System.out.println("jir>"+companyId);
+
+
         drug.setCompany(companyRepository.findById(drugCreateRequestDTO.getCompany().getCompanyId()).orElse(null));
         drugRepository.save(drug);
     }

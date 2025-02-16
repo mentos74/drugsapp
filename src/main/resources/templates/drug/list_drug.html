@@ -33,19 +33,6 @@
     <td>
       <a th:href="'/drug/edit/' + ${drug.drugId}" th:text="${drug.drugName}"></a>
     </td>
-<!--    <td th:text="${drug.indication}"></td>-->
-<!--    <td th:text="${drug.contraIndication}"></td>-->
-<!--    <td th:text="${drug.description}"></td>-->
-<!--    <td>-->
-<!--      <ul>-->
-<!--        <li th:each="ingredient : ${drug.activeIngredients}" th:text="${ingredient.nameActiveIngredient}"></li>-->
-<!--      </ul>-->
-<!--    </td>-->
-<!--    <td>-->
-<!--      <ul>-->
-<!--        <li th:each="class : ${drug.drugClasses}" th:text="${class.drugClassName}"></li>-->
-<!--      </ul>-->
-<!--    </td>-->
     <td th:text="${drug.company?.companyName}"></td>
     <td>
       <a class="btn btn-warning btn-sm" th:href="'/drug/edit/' + ${drug.drugId}">Edit</a>
