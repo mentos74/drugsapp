@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 
+//todo tambahin gambar di drug.java nya, bikin juga service buat drugsnya
+
 @Controller
 public class DrugResource {
 
