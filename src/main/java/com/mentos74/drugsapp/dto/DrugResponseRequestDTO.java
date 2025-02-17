@@ -25,4 +25,6 @@ public class DrugResponseRequestDTO {
 
     private Company company;
 
+    private String drugPhoto;
+
 }

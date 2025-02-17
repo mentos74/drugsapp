@@ -26,5 +26,7 @@ public class DrugCreateRequestDTO {
 
     private Company company;
 
+    private String drugPhoto;
+
 
 }

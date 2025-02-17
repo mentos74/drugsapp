@@ -18,6 +18,7 @@
   <tr>
     <th>#</th>
     <th>Drug Name</th>
+    <th>Drug Photo</th>
     <th>Company</th>
   </tr>
   </thead>
@@ -26,6 +27,9 @@
     <td th:text="${iterStat.index + 1}"></td>
     <td>
       <a th:href="'/drug/edit/' + ${drug.drugId}" th:text="${drug.drugName}"></a>
+    </td>
+    <td>
+      <img th:src="'data:image/png;base64,' + ${drug.drugPhoto}" alt="Drug Photo" style="max-width: 100px;">
     </td>
     <td th:text="${drug.company?.companyName}"></td>
   </tr>

@@ -10,11 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
-//todo tambahin gambar di drug.java nya, bikin juga service buat drugsnya
+//todo bikin servicenya sama benerin buat gambarnya di kasih kondisi kalo null dia ga bakal ke update
 
 @Controller
 public class DrugResource {
@@ -25,7 +28,6 @@ public class DrugResource {
     @GetMapping("/drug/list")
     public String listDrug(Model model) {
         List<DrugResponseRequestDTO> listDrugs = drugService.listDrugs();
-        System.out.println("bjir>>"+listDrugs.size());
         model.addAttribute("listDrugs", listDrugs);
         return "/drug/list_drug";
     }
@@ -48,11 +50,24 @@ public class DrugResource {
     public String addNewDrug(@ModelAttribute("dto") @Valid DrugCreateRequestDTO dto,
                              @RequestParam(value = "activeIngredients", required = false) List<Long> activeIngredientIds,
                              @RequestParam(value = "drugClasses", required = false) List<Long> drugClassIds,
+                             @RequestParam("drugPhotoFile") MultipartFile file,
                              BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("dto", dto);
             return "/drug/add_drug";
         }
+
+        if (file != null && !file.isEmpty()) {
+            try {
+                String encodedFile = Base64.getEncoder().encodeToString(file.getBytes());
+                dto.setDrugPhoto(encodedFile);
+            } catch (IOException e) {
+                bindingResult.rejectValue("drugPhotoFile", "error.fileUpload", "Failed to process file.");
+                model.addAttribute("dto", dto);
+                return "/drug/add_drug";
+            }
+        }
+
         drugService.createDrug(dto, activeIngredientIds, drugClassIds, dto.getCompany().getCompanyId());
         return "redirect:/drug/list";
     }
@@ -60,6 +75,7 @@ public class DrugResource {
     @GetMapping("/drug/edit/{id}")
     public String editDrugNew(@PathVariable Long id, Model model) {
         DrugUpdateRequestDTO dto = drugService.findDrugById(id);
+        System.out.println("hehe?"+dto.getDrugPhoto());
         model.addAttribute("dto", dto);
         model.addAttribute("companies", drugService.listCompany());
         model.addAttribute("drugClasses", drugService.listDrugClass());
@@ -72,6 +88,7 @@ public class DrugResource {
                               @ModelAttribute("dto") @Valid DrugUpdateRequestDTO dto,
                               @RequestParam(value = "activeIngredients", required = false) List<Long> activeIngredientIds,
                               @RequestParam(value = "drugClasses", required = false) List<Long> drugClassIds,
+                              @RequestParam("drugPhotoFile") MultipartFile file,
                               BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("dto", dto);
@@ -79,6 +96,20 @@ public class DrugResource {
             model.addAttribute("drugClasses", drugClassIds);
             model.addAttribute("activeIngredients", activeIngredientIds);
             return "/drug/edit_drug";
+        }
+
+        if (file != null && !file.isEmpty()) {
+            try {
+                String encodedFile = Base64.getEncoder().encodeToString(file.getBytes());
+                dto.setDrugPhoto(encodedFile);
+            } catch (IOException e) {
+                bindingResult.rejectValue("drugPhotoFile", "error.fileUpload", "Failed to process file.");
+                model.addAttribute("dto", dto);
+                model.addAttribute("companies", dto.getCompany());
+                model.addAttribute("drugClasses", drugClassIds);
+                model.addAttribute("activeIngredients", activeIngredientIds);
+                return "/drug/edit_drug";
+            }
         }
 
         drugService.updateDrug(dto, activeIngredientIds, drugClassIds, dto.getCompany().getCompanyId());

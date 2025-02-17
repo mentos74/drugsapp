@@ -58,6 +58,7 @@ public class DrugServiceImpl implements DrugService {
         drug.setContraIndication(drugCreateRequestDTO.getContraIndication());
         drug.setDescription(drugCreateRequestDTO.getDescription());
         drug.setDeleted(false);
+        drug.setDrugPhoto(drugCreateRequestDTO.getDrugPhoto());
 
 
         if (drugClassIds != null) {
@@ -94,6 +95,7 @@ public class DrugServiceImpl implements DrugService {
         drug.setIndication(drugUpdateRequestDTO.getIndication());
         drug.setContraIndication(drugUpdateRequestDTO.getContraIndication());
         drug.setDescription(drugUpdateRequestDTO.getDescription());
+        drug.setDrugPhoto(drugUpdateRequestDTO.getDrugPhoto());
 
 
         Set<ActiveIngredient> activeIngredients = activeIngredientIds.stream()
@@ -130,6 +132,7 @@ public class DrugServiceImpl implements DrugService {
             dto.setDescription(s.getDescription());
             dto.setIndication(s.getIndication());
             dto.setContraIndication(s.getContraIndication());
+            dto.setDrugPhoto(s.getDrugPhoto());
 
             dto.setActiveIngredients(
                     s.getActiveIngredients().stream()
@@ -159,6 +162,7 @@ public class DrugServiceImpl implements DrugService {
         dto.setDescription(drug.getDescription());
         dto.setIndication(drug.getIndication());
         dto.setContraIndication(drug.getContraIndication());
+        dto.setDrugPhoto(drug.getDrugPhoto());
 
         dto.setActiveIngredients(
                 drug.getActiveIngredients().stream()

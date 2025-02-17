@@ -28,4 +28,6 @@ public class DrugUpdateRequestDTO {
 
     private Company company;
 
+    private String drugPhoto;
+
 }

@@ -21,19 +21,22 @@ public class Drug implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long drugId;
+    private Long drugId;
 
-    @Column(name= "drug_name")
-    String drugName;
+    @Column(name = "drug_name")
+    private String drugName;
 
-    @Column(name= "indication" , columnDefinition = "text")
-    String indication;
+    @Column(name = "indication", columnDefinition = "text")
+    private String indication;
 
-    @Column(name= "contra_indication", columnDefinition = "text")
-    String contraIndication;
+    @Column(name = "contra_indication", columnDefinition = "text")
+    private String contraIndication;
 
-    @Column(name= "description" , columnDefinition = "text")
-    String description;
+    @Column(name = "description", columnDefinition = "text")
+    private String description;
+
+    @Column(columnDefinition = "text")
+    private String drugPhoto;
 
 
     @ManyToMany
