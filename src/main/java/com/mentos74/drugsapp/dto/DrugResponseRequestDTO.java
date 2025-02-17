@@ -19,9 +19,9 @@ public class DrugResponseRequestDTO {
 
     private String description;
 
-    private Set<DrugClass> drugClasses;
+    private Set<Long> activeIngredients;
 
-    private Set<ActiveIngredient> activeIngredients;
+    private Set<Long> drugClasses;
 
     private Company company;
 

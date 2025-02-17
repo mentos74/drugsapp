@@ -18,11 +18,6 @@
   <tr>
     <th>#</th>
     <th>Drug Name</th>
-<!--    <th>Indication</th>-->
-<!--    <th>Contra Indication</th>-->
-<!--    <th>Description</th>-->
-<!--    <th>Active Ingredients</th>-->
-<!--    <th>Drug Classes</th>-->
     <th>Company</th>
     <th>Actions</th>
   </tr>
@@ -34,10 +29,6 @@
       <a th:href="'/drug/edit/' + ${drug.drugId}" th:text="${drug.drugName}"></a>
     </td>
     <td th:text="${drug.company?.companyName}"></td>
-    <td>
-      <a class="btn btn-warning btn-sm" th:href="'/drug/edit/' + ${drug.drugId}">Edit</a>
-      <a class="btn btn-danger btn-sm" th:href="'/drug/delete/' + ${drug.drugId}" onclick="return confirm('Are you sure?')">Delete</a>
-    </td>
   </tr>
   </tbody>
 </table>

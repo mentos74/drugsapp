@@ -14,8 +14,6 @@ public class DrugCreateRequestDTO {
 
     private String drugName;
 
-    private List<String> ingredients;
-
     private String indication;
 
     private String contraIndication;

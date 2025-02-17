@@ -81,7 +81,7 @@ public class CompanyServiceImpl implements CompanyService {
         comp.setDeleted(true);
 
         companyRepository.save(comp);
-        System.out.println("abis save bjir");
+
     }
 
 

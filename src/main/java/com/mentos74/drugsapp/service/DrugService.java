@@ -14,7 +14,7 @@ public interface DrugService {
 
     public List<DrugResponseRequestDTO> listDrugs();
 
-    public DrugUpdateRequestDTO findById();
+    public DrugUpdateRequestDTO findDrugById(Long id);
 
     public void deleteDrug(Long id);
 

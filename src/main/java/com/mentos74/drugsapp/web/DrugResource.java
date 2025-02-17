@@ -1,17 +1,16 @@
 package com.mentos74.drugsapp.web;
 
+import com.mentos74.drugsapp.dto.CompanyUpdateRequestDTO;
 import com.mentos74.drugsapp.dto.DrugCreateRequestDTO;
 import com.mentos74.drugsapp.dto.DrugResponseRequestDTO;
+import com.mentos74.drugsapp.dto.DrugUpdateRequestDTO;
 import com.mentos74.drugsapp.service.DrugService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -56,6 +55,29 @@ public class DrugResource {
         drugService.createDrug(dto, activeIngredientIds, drugClassIds, dto.getCompany().getCompanyId());
         return "redirect:/drug/list";
     }
+
+    @GetMapping("/drug/edit/{id}")
+    public String editDrugNew(@PathVariable Long id, Model model) {
+        DrugUpdateRequestDTO dto = drugService.findDrugById(id);
+        model.addAttribute("dto", dto);
+        model.addAttribute("companies", drugService.listCompany());
+        model.addAttribute("drugClasses", drugService.listDrugClass());
+        model.addAttribute("activeIngredients", drugService.listActiveIngredient());
+        return "/drug/edit_drug";
+    }
+
+//    @PostMapping("/company/edit/{id}")
+//    public String editCompany(@PathVariable Long id,
+//                              @ModelAttribute("companyUpdateRequestDTO") @Valid CompanyUpdateRequestDTO companyUpdateRequestDTO,
+//                              BindingResult bindingResult, Model model) {
+//        if (bindingResult.hasErrors()) {
+//            model.addAttribute("companyUpdateRequestDTO", companyUpdateRequestDTO);
+//            return "/company/edit_company";
+//        }
+//
+//        companyService.updateCompany(companyUpdateRequestDTO, id);
+//        return "redirect:/company/list";
+//    }
 
 
 }

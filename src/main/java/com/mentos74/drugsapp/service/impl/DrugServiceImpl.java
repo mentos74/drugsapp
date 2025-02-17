@@ -93,20 +93,53 @@ public class DrugServiceImpl implements DrugService {
             DrugResponseRequestDTO dto = new DrugResponseRequestDTO();
             dto.setDrugId(s.getDrugId());
             dto.setDrugName(s.getDrugName());
-            dto.setDrugClasses(s.getDrugClasses());
             dto.setCompany(s.getCompany());
             dto.setDescription(s.getDescription());
-            dto.setActiveIngredients(s.getActiveIngredients());
             dto.setIndication(s.getIndication());
             dto.setContraIndication(s.getContraIndication());
+
+            dto.setActiveIngredients(
+                    s.getActiveIngredients().stream()
+                            .map(ActiveIngredient::getActiveIngredientId)
+                            .collect(Collectors.toSet())
+            );
+
+            dto.setDrugClasses(
+                    s.getDrugClasses().stream()
+                            .map(DrugClass::getDrugClassId)
+                            .collect(Collectors.toSet())
+            );
 
             return dto;
         }).collect(Collectors.toList());
     }
 
     @Override
-    public DrugUpdateRequestDTO findById() {
-        return null;
+    public DrugUpdateRequestDTO findDrugById(Long id) {
+
+        Drug drug =  drugRepository.findById(id).orElseThrow();
+        DrugUpdateRequestDTO dto = new DrugUpdateRequestDTO();
+
+        dto.setDrugId(drug.getDrugId());
+        dto.setDrugName(drug.getDrugName());
+        dto.setCompany(drug.getCompany());
+        dto.setDescription(drug.getDescription());
+        dto.setIndication(drug.getIndication());
+        dto.setContraIndication(drug.getContraIndication());
+
+        dto.setActiveIngredients(
+                drug.getActiveIngredients().stream()
+                        .map(ActiveIngredient::getActiveIngredientId)
+                        .collect(Collectors.toSet())
+        );
+
+        dto.setDrugClasses(
+                drug.getDrugClasses().stream()
+                        .map(DrugClass::getDrugClassId)
+                        .collect(Collectors.toSet())
+        );
+
+        return dto;
     }
 
     @Override
