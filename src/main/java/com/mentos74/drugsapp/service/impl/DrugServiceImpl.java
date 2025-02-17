@@ -3,6 +3,7 @@ package com.mentos74.drugsapp.service.impl;
 
 import com.mentos74.drugsapp.dto.*;
 import com.mentos74.drugsapp.entity.ActiveIngredient;
+import com.mentos74.drugsapp.entity.Company;
 import com.mentos74.drugsapp.entity.Drug;
 import com.mentos74.drugsapp.entity.DrugClass;
 import com.mentos74.drugsapp.repository.ActiveIngredientRepository;
@@ -85,6 +86,38 @@ public class DrugServiceImpl implements DrugService {
     @Override
     public void updateDrug(DrugUpdateRequestDTO drugUpdateRequestDTO, List<Long> activeIngredientIds, List<Long> drugClassIds, Long companyId) {
 
+        Drug drug = drugRepository.findById(drugUpdateRequestDTO.getDrugId())
+                .orElseThrow(() -> new RuntimeException("Drug not found"));
+
+
+        drug.setDrugName(drugUpdateRequestDTO.getDrugName());
+        drug.setIndication(drugUpdateRequestDTO.getIndication());
+        drug.setContraIndication(drugUpdateRequestDTO.getContraIndication());
+        drug.setDescription(drugUpdateRequestDTO.getDescription());
+
+
+        Set<ActiveIngredient> activeIngredients = activeIngredientIds.stream()
+                .map(id -> activeIngredientRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("Active Ingredient not found: " + id)))
+                .collect(Collectors.toSet());
+
+        drug.setActiveIngredients(activeIngredients); // langsung replace tanpa removeIf + addAll
+
+
+        Set<DrugClass> drugClasses = drugClassIds.stream()
+                .map(id -> drugClassRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("Drug Class not found: " + id)))
+                .collect(Collectors.toSet());
+
+        drug.setDrugClasses(drugClasses);
+
+
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() -> new RuntimeException("Company not found: " + companyId));
+        drug.setCompany(company);
+
+
+        drugRepository.save(drug);
     }
 
     @Override
@@ -144,7 +177,9 @@ public class DrugServiceImpl implements DrugService {
 
     @Override
     public void deleteDrug(Long id) {
-
+        Drug drug = drugRepository.findById(id).orElseThrow();
+        drug.setDeleted(true);
+        drugRepository.save(drug);
     }
 
     @Override

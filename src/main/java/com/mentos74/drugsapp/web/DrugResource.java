@@ -1,6 +1,5 @@
 package com.mentos74.drugsapp.web;
 
-import com.mentos74.drugsapp.dto.CompanyUpdateRequestDTO;
 import com.mentos74.drugsapp.dto.DrugCreateRequestDTO;
 import com.mentos74.drugsapp.dto.DrugResponseRequestDTO;
 import com.mentos74.drugsapp.dto.DrugUpdateRequestDTO;
@@ -66,18 +65,30 @@ public class DrugResource {
         return "/drug/edit_drug";
     }
 
-//    @PostMapping("/company/edit/{id}")
-//    public String editCompany(@PathVariable Long id,
-//                              @ModelAttribute("companyUpdateRequestDTO") @Valid CompanyUpdateRequestDTO companyUpdateRequestDTO,
-//                              BindingResult bindingResult, Model model) {
-//        if (bindingResult.hasErrors()) {
-//            model.addAttribute("companyUpdateRequestDTO", companyUpdateRequestDTO);
-//            return "/company/edit_company";
-//        }
-//
-//        companyService.updateCompany(companyUpdateRequestDTO, id);
-//        return "redirect:/company/list";
-//    }
+    @PostMapping("/drug/edit/{id}")
+    public String editDrug(@PathVariable Long id,
+                              @ModelAttribute("dto") @Valid DrugUpdateRequestDTO dto,
+                              @RequestParam(value = "activeIngredients", required = false) List<Long> activeIngredientIds,
+                              @RequestParam(value = "drugClasses", required = false) List<Long> drugClassIds,
+                              BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("dto", dto);
+            model.addAttribute("companies", dto.getCompany());
+            model.addAttribute("drugClasses", drugClassIds);
+            model.addAttribute("activeIngredients", activeIngredientIds);
+            return "/drug/edit_drug";
+        }
+
+        drugService.updateDrug(dto, activeIngredientIds, drugClassIds, dto.getCompany().getCompanyId());
+        return "redirect:/drug/list";
+    }
+
+
+    @PostMapping("/drug/delete/{id}")
+    public String deleteDrug(@PathVariable Long id) {
+        drugService.deleteDrug(id);
+        return "redirect:/drug/list";
+    }
 
 
 }

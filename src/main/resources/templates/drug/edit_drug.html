@@ -11,8 +11,16 @@
 
 <body class="container mt-5">
 <h1 class="mb-4 text-center">Edit Drug</h1>
+<div class="d-flex justify-content-end gap-2 align-items-center mt-3">
 
-<form th:action="@{/drug/update}" method="post" class="row g-3">
+    <form method="POST" th:action="@{'/drug/delete/' + ${dto.drugId}}"
+          class="d-inline-block" onsubmit="return confirm('Are you sure you want to delete this drug?');">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+
+
+</div>
+<form th:action="@{'/drug/edit/' + ${dto.drugId}}" method="post" class="row g-3">
     <input type="hidden" th:value="${dto.drugId}" name="drugId">
 
     <div class="col-md-12">

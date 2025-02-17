@@ -72,7 +72,6 @@ public class CompanyResource {
 
     @PostMapping("/company/delete/{id}")
     public String deleteCompany(@PathVariable Long id) {
-        System.out.println("masuk sini bjir");
         companyService.deleteCompany(id);
         return "redirect:/company/list";
     }
