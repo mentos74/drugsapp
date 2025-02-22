@@ -1,6 +1,7 @@
 package com.mentos74.drugsapp.controller;
 
 import com.mentos74.drugsapp.dto.DrugCreateRequestDTO;
+import com.mentos74.drugsapp.dto.DrugResponseRequestDTO;
 import com.mentos74.drugsapp.dto.DrugUpdateRequestDTO;
 import com.mentos74.drugsapp.entity.Drug;
 import com.mentos74.drugsapp.service.DrugService;
@@ -15,9 +16,8 @@ public class DrugController {
     DrugService drugService;
 
     @GetMapping("/v1/drug")
-    public ResponseEntity<String> getDrug() {
-        String repsonse = "Hello guys";
-        return ResponseEntity.ok(repsonse);
+    public ResponseEntity<DrugResponseRequestDTO> getDrug(@PathVariable Long id) {
+         return ResponseEntity.ok(drugService.findDrugByIdApi(id));
     }
 
     @PostMapping("/v1/drug")

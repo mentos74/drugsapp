@@ -180,6 +180,34 @@ public class DrugServiceImpl implements DrugService {
     }
 
     @Override
+    public DrugResponseRequestDTO findDrugByIdApi(Long id) {
+        Drug drug =  drugRepository.findById(id).orElseThrow();
+        DrugResponseRequestDTO dto = new DrugResponseRequestDTO();
+
+        dto.setDrugId(drug.getDrugId());
+        dto.setDrugName(drug.getDrugName());
+        dto.setCompany(drug.getCompany());
+        dto.setDescription(drug.getDescription());
+        dto.setIndication(drug.getIndication());
+        dto.setContraIndication(drug.getContraIndication());
+        dto.setDrugPhoto(drug.getDrugPhoto());
+
+        dto.setActiveIngredients(
+                drug.getActiveIngredients().stream()
+                        .map(ActiveIngredient::getActiveIngredientId)
+                        .collect(Collectors.toSet())
+        );
+
+        dto.setDrugClasses(
+                drug.getDrugClasses().stream()
+                        .map(DrugClass::getDrugClassId)
+                        .collect(Collectors.toSet())
+        );
+
+        return dto;
+    }
+
+    @Override
     public void deleteDrug(Long id) {
         Drug drug = drugRepository.findById(id).orElseThrow();
         drug.setDeleted(true);
