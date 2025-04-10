@@ -112,7 +112,7 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    // Create image if it doesn't exist
+
                     if ($('#drugPhotoPreview').length === 0) {
                         previewContainer.append('<img id="drugPhotoPreview" style="max-width: 100px;">');
                     }
@@ -121,7 +121,7 @@
                 }
                 reader.readAsDataURL(file);
             } else {
-                // If no file selected, show the original state
+
                 if ($('#drugPhotoPreview').attr('th:src')) {
                     $('#drugPhotoPreview').show();
                     $('#noPhotoText').hide();
