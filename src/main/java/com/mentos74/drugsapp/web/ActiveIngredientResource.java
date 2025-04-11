@@ -26,15 +26,17 @@ public class ActiveIngredientResource {
     public String listActiveIngredients(Model model) {
         List<ActiveIngredientResponseRequestDTO> listIngredients = activeIngredientService.listActiveIngredient();
         model.addAttribute("listIngredients", listIngredients);
-        return "/active_ingredient/list_activeIngredient";
+        return "active_ingredient/list_activeIngredient";
     }
 
     @GetMapping("/active-ingredient/add")
     public String addActiveIngredient(Model model) {
-        ActiveIngredientCreateRequestDTO addActiveDTO = new ActiveIngredientCreateRequestDTO();
-        model.addAttribute("dto", addActiveDTO);
-        return "/active_ingredient/add_activeIngredient";
+        model.addAttribute("dto", new ActiveIngredientCreateRequestDTO());
+        return "/active_ingredient/add_activeIngredient :: modalContent";
     }
+
+
+
 
     @PostMapping("/active-ingredient/add")
     public String addActiveIngredientNew(
@@ -66,10 +68,10 @@ public class ActiveIngredientResource {
 
 
     @GetMapping("/active-ingredient/edit/{id}")
-    public String editActiveIngredient(@PathVariable Long id,Model model) {
+    public String editActiveIngredient(@PathVariable Long id, Model model) {
         ActiveIngredientUpdateRequestDTO editActiveDTO = activeIngredientService.findActiveIngredientById(id);
         model.addAttribute("dto", editActiveDTO);
-        return "/active_ingredient/edit_activeIngredient";
+        return "/active_ingredient/edit_activeIngredient :: modalContent";
     }
 
     @PostMapping("/active-ingredient/edit/{id}")

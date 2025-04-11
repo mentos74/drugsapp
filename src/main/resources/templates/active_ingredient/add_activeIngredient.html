@@ -8,53 +8,54 @@
         #chemicalStructurePreview {
             display: none;
             max-width: 100px;
-            margin-top: 1rem; /* Add some spacing */
+            margin-top: 1rem;
         }
     </style>
 </head>
 
 <body class="container mt-5">
 <h1 class="mb-4 text-center">Add Active Ingredient</h1>
-
-<form action="/active-ingredient/add" method="post" enctype="multipart/form-data" class="row g-3">
-    <div class="col-md-6">
-        <label for="nameActiveIngredient" class="form-label">Name</label>
-        <input type="text" class="form-control" id="nameActiveIngredient" name="nameActiveIngredient" required>
-    </div>
-    <div class="col-md-6">
-        <label for="chemicalFormula" class="form-label">Chemical Formula</label>
-        <input type="text" class="form-control" id="chemicalFormula" name="chemicalFormula" required>
-    </div>
-    <div class="col-md-12">
-        <label for="chemicalStructureFile" class="form-label">Chemical Structure</label>
-        <input type="file" class="form-control" id="chemicalStructureFile" name="chemicalStructureFile" accept="image/*"
-               required>
-        <div class="mt-3">
-            <img id="chemicalStructurePreview" alt="Chemical Structure">
+<div th:fragment="modalContent">
+    <form action="/active-ingredient/add" method="post" enctype="multipart/form-data" class="row g-3">
+        <div class="col-md-6">
+            <label for="nameActiveIngredient" class="form-label">Name</label>
+            <input type="text" class="form-control" id="nameActiveIngredient" name="nameActiveIngredient" required>
         </div>
-    </div>
-    <div class="col-md-12">
-        <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
-    </div>
-    <div class="d-flex justify-content-end mb-3">
-        <button type="submit" class="btn btn-primary ms-2">Save</button>
-        <a href="/active-ingredient/list" class="btn btn-secondary ms-2">Back to List</a>
-    </div>
-</form>
+        <div class="col-md-6">
+            <label for="chemicalFormula" class="form-label">Chemical Formula</label>
+            <input type="text" class="form-control" id="chemicalFormula" name="chemicalFormula" required>
+        </div>
+        <div class="col-md-12">
+            <label for="chemicalStructureFile" class="form-label">Chemical Structure</label>
+            <input type="file" class="form-control" id="chemicalStructureFile" name="chemicalStructureFile"
+                   accept="image/*"
+                   required>
+            <div class="mt-3">
+                <img id="chemicalStructurePreview" alt="Chemical Structure">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+        </div>
+        <div class="d-flex justify-content-end mb-3">
+            <button type="submit" class="btn btn-primary ms-2">Save</button>
+        </div>
+    </form>
+</div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const chemicalStructureInput = document.getElementById('chemicalStructureFile');
         const chemicalStructurePreview = document.getElementById('chemicalStructurePreview');
 
-        chemicalStructureInput.addEventListener('change', function(e) {
+        chemicalStructureInput.addEventListener('change', function (e) {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     chemicalStructurePreview.src = e.target.result;
-                    chemicalStructurePreview.style.display = 'block'; // Make the image visible
+                    chemicalStructurePreview.style.display = 'block';
                 }
                 reader.readAsDataURL(file);
             } else {

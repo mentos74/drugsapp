@@ -117,7 +117,7 @@
     <h1 class="mb-4 text-center">Active Ingredients</h1>
 
     <div class="d-flex justify-content-end mb-3">
-        <a href="/active-ingredient/add" class="btn btn-primary">Add New</a>
+        <a onclick="loadModal('/active-ingredient/add')" class="btn btn-primary" >Add New</a>
     </div>
 
     <div class="table-responsive">
@@ -135,8 +135,10 @@
             <tr th:each="ingredient, iterStat : ${listIngredients}">
                 <td th:text="${iterStat.index + 1}"></td>
                 <td>
-                    <a th:href="@{/active-ingredient/edit/{id}(id=${ingredient.activeIngredientId})}"
-                       th:text="${ingredient.nameActiveIngredient}"></a>
+                    <a th:text="${ingredient.nameActiveIngredient}"
+                       style="color: blue; text-decoration: underline; cursor: pointer;"
+                       th:attr="onclick='loadModal(\'/active-ingredient/edit/' + ${ingredient.activeIngredientId} + '\')'">
+                    </a>
                 </td>
                 <td>
                     <img th:if="${ingredient.chemicalStructure != null}"
@@ -149,7 +151,32 @@
             </tbody>
         </table>
     </div>
+    <div class="modal fade" id="activeIngredientModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="modalLabel">Active Ingredient</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalContent">
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
+<script>
+    function loadModal(url) {
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modalContent').innerHTML = html;
+                new bootstrap.Modal(document.getElementById('activeIngredientModal')).show();
+            })
+            .catch(error => console.error('Error loading modal:', error));
+    }
+</script>
 </body>
+
 </html>
