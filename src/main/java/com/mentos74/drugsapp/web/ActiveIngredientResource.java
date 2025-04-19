@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Base64;
 import java.util.List;
 
+//todo bikin return add edit nya jadi json aja
+
 @Controller
 public class ActiveIngredientResource {
 

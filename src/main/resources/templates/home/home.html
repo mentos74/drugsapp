@@ -27,8 +27,8 @@
         body {
             font-family: 'Roboto', sans-serif;
             line-height: 1.6;
-            color: #212529;
-            background-color: #f8f9fa;
+            color: var(--text-light);
+            background-color: var(--primary-color);
             overflow-x: hidden;
         }
 
@@ -66,8 +66,12 @@
             background-color: var(--secondary-color);
         }
 
+        section {
+            color: var(--text-light);
+        }
+
         .hero-section {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: url('https://images.unsplash.com/photo-1574043948184-144f2ef80fe3?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&w=1600&q=80') center center / cover no-repeat;
             color: var(--text-light);
             min-height: 70vh;
             display: flex;
@@ -76,28 +80,19 @@
             text-align: center;
             padding: 4rem 1rem;
             position: relative;
-            overflow: hidden;
         }
+
+
 
         .hero-section::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
-            opacity: 0.4;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6); /* overlay gelap */
+            z-index: 0;
         }
 
         .hero-content {
-            max-width: 42rem;
-            width: 100%;
-            padding: 2.5rem;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 1rem;
-            box-shadow: var(--shadow-lg);
-            transition: var(--transition);
             position: relative;
             z-index: 1;
         }
@@ -150,6 +145,23 @@
                 padding: 1.5rem;
             }
         }
+
+        .blockquote {
+            padding: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.95);
+            color: #212529;
+            border-left: 5px solid var(--primary-color);
+            box-shadow: var(--shadow-sm);
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .blockquote-footer {
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            color: #6c757d;
+        }
+
     </style>
 </head>
 
@@ -157,51 +169,96 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom mb-4 sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="/home" aria-label="Home">DrugMS</a>
+        <a class="navbar-brand" href="/" aria-label="Home">DrugMS</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/drug/list" aria-current="page">Drugs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/drug-class/list">Drug Classes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/company/list">Companies</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/active-ingredient/list">Active Ingredients</a>
-                </li>
+                <li class="nav-item"><a class="nav-link active" href="/">Beranda</a></li>
+                <li class="nav-item"><a class="nav-link" href="/about">Tentang Kami</a></li>
+                <li class="nav-item"><a class="nav-link" href="/services">Layanan</a></li>
+                <li class="nav-item"><a class="nav-link" href="/contact">Kontak</a></li>
+                <li class="nav-item"><a class="nav-link" href="/help">Bantuan</a></li>
             </ul>
             <div class="d-flex align-items-center">
-                <th:block th:if="${session.user != null}">
-                    <span class="text-white me-3" th:text="'Welcome, ' + ${session.user.username}"></span>
-                    <a href="/logout" class="btn btn-outline-light" aria-label="Logout">Logout</a>
-                </th:block>
-                <th:block th:if="${session.user == null}">
-                    <a href="/login" class="btn btn-outline-light" aria-label="Login">Login</a>
-                </th:block>
+                <a href="/register" class="btn btn-light me-2">Daftar Sekarang</a>
+                <a href="/login" class="btn btn-outline-light">Masuk</a>
             </div>
         </div>
     </div>
 </nav>
 
-
 <section class="hero-section">
     <div class="hero-content">
-        <h1 class="animate__animated animate__fadeInDown">Drug Management System</h1>
-        <p class="animate__animated animate__fadeIn animate__delay-1s">
-            Comprehensive solution for managing pharmaceutical data including drugs, companies, and active ingredients.
+        <h1>Selamat Datang di DrugMS!</h1>
+        <p>
+            Temukan pengalaman terbaik dalam pengelolaan data obat, perusahaan, dan bahan aktif.
         </p>
-        <a href="/drug/list" class="btn btn-hero animate__animated animate__fadeInUp animate__delay-2s">
-            Explore System
-        </a>
+        <a href="/register" class="btn btn-hero me-2">Daftar Sekarang</a>
     </div>
 </section>
+
+<section class="container py-5">
+    <div class="text-center mb-4">
+        <h2>Fitur Unggulan</h2>
+        <p class="text-muted">Kami memberikan kemudahan dan keamanan dalam pengelolaan data farmasi.</p>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-4 mb-3">
+            <h5>🧩 Mudah Digunakan</h5>
+            <p>Antarmuka intuitif dan ramah pengguna.</p>
+        </div>
+        <div class="col-md-4 mb-3">
+            <h5>🌙 Akses 24/7</h5>
+            <p>Gunakan sistem kapan saja tanpa batasan waktu.</p>
+        </div>
+        <div class="col-md-4 mb-3">
+            <h5>💬 Dukungan Pelanggan</h5>
+            <p>Tim kami siap membantu Anda setiap saat.</p>
+        </div>
+    </div>
+</section>
+
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2>Apa Kata Mereka?</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <blockquote class="blockquote text-center">
+                    <p class="mb-0">"Sistem ini sangat membantu dan mudah digunakan!"</p>
+                    <footer class="blockquote-footer">Andi, Apoteker</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-5">
+                <blockquote class="blockquote text-center">
+                    <p class="mb-0">"Pelayanan cepat dan data selalu aman."</p>
+                    <footer class="blockquote-footer">Sari, Manajer Farmasi</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<footer class="bg-dark text-light py-4 mt-5">
+    <div class="container text-center">
+        <p class="mb-1">© 2025 DrugMS. All rights reserved.</p>
+        <div>
+            <a href="/privacy" class="text-light me-3">Kebijakan Privasi</a>
+            <a href="/terms" class="text-light me-3">Syarat & Ketentuan</a>
+            <a href="/contact" class="text-light">Kontak</a>
+        </div>
+        <div class="mt-2">
+            <a href="#" class="text-light me-2">Facebook</a>
+            <a href="#" class="text-light me-2">Twitter</a>
+            <a href="#" class="text-light">Instagram</a>
+        </div>
+    </div>
+</footer>
 
 
 <script>
