@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -94,14 +92,6 @@
             z-index: 0;
         }
 
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-content:hover {
-            transform: scale(1.03);
-        }
 
         .hero-section h1 {
             font-size: 2.75rem;
@@ -116,23 +106,6 @@
             opacity: 0.9;
         }
 
-        .btn-hero {
-            font-size: 1.15rem;
-            padding: 0.75rem 1.75rem;
-            border-radius: 2rem;
-            font-weight: 600;
-            transition: var(--transition);
-            background-color: var(--text-light);
-            color: var(--primary-color);
-            border: none;
-        }
-
-        .btn-hero:hover, .btn-hero:focus {
-            background-color: var(--secondary-color);
-            color: var(--text-light);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
-        }
 
         @media (max-width: 768px) {
             .hero-section h1 {
@@ -143,44 +116,26 @@
                 font-size: 1.1rem;
             }
 
-            .hero-content {
-                padding: 1.5rem;
-            }
+
         }
 
-        .blockquote {
-            padding: 1.5rem;
-            background-color: rgba(255, 255, 255, 0.95);
-            color: #212529;
-            border-left: 5px solid var(--primary-color);
-            box-shadow: var(--shadow-sm);
-            border-radius: 0.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .blockquote-footer {
-            margin-top: 1rem;
-            font-size: 0.95rem;
-            color: #6c757d;
-        }
 
     </style>
 </head>
-
-<body>
+<body style="background-color: #007bff; font-family: 'Roboto', sans-serif; color: #f8f9fa;">
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom mb-4 sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="/" aria-label="Home">DMS</a>
+        <a class="navbar-brand" href="/home" aria-label="Home">DMS</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link active" href="/">Beranda</a></li>
+                <li class="nav-item"><a class="nav-link" href="/">Beranda</a></li>
                 <li class="nav-item"><a class="nav-link" href="/about">Tentang Kami</a></li>
-                <li class="nav-item"><a class="nav-link" href="/services">Layanan</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/services">Layanan</a></li>
                 <li class="nav-item"><a class="nav-link" href="/contact">Kontak</a></li>
                 <li class="nav-item"><a class="nav-link" href="/help">Bantuan</a></li>
             </ul>
@@ -192,60 +147,16 @@
     </div>
 </nav>
 
-<section class="hero-section">
-    <div class="hero-content">
-        <h1>Selamat Datang di DMS (Drug Management System) </h1>
-        <p>
-            Temukan pengalaman terbaik dalam pengelolaan data obat, perusahaan, dan bahan aktif.
-        </p>
-        <a href="/register" class="btn btn-hero me-2">Daftar Sekarang</a>
-    </div>
-</section>
-
-<section class="container py-5">
-    <div class="text-center mb-4">
-        <h2>Fitur Unggulan</h2>
-        <p class="text-muted">Kami memberikan kemudahan dan keamanan dalam pengelolaan data farmasi.</p>
-    </div>
-    <div class="row text-center">
-        <div class="col-md-4 mb-3">
-            <h5>🧩 Mudah Digunakan</h5>
-            <p>Antarmuka intuitif dan ramah pengguna.</p>
-        </div>
-        <div class="col-md-4 mb-3">
-            <h5>🌙 Akses 24/7</h5>
-            <p>Gunakan sistem kapan saja tanpa batasan waktu.</p>
-        </div>
-        <div class="col-md-4 mb-3">
-            <h5>💬 Dukungan Pelanggan</h5>
-            <p>Tim kami siap membantu Anda setiap saat.</p>
-        </div>
-    </div>
-</section>
-
-<section class="bg-light py-5">
+<section class="hero-section bg-transparent d-flex align-items-center justify-content-center" style="min-height: 80vh;">
     <div class="container">
-        <div class="text-center mb-4">
-            <h2>Apa Kata Mereka?</h2>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-5">
-                <blockquote class="blockquote text-center">
-                    <p class="mb-0">"Sistem ini sangat membantu dan mudah digunakan!"</p>
-                    <footer class="blockquote-footer"> Shigure S.Farm Apt., Apoteker</footer>
-                </blockquote>
-            </div>
-            <div class="col-md-5">
-                <blockquote class="blockquote text-center">
-                    <p class="mb-0">"Pelayanan cepat dan data selalu aman."</p>
-                    <footer class="blockquote-footer">Rezza S.Farm, Manajer Farmasi</footer>
-                </blockquote>
-            </div>
+        <div class="card mx-auto shadow-lg p-5 border-0" style="max-width: 720px; border-radius: 1.5rem;">
+            <h1 class="text-center text-dark mb-4">Layanan Kami</h1>
+            <p class="text-muted fs-5">Manajemen Data Obat</p>
+            <p class="text-muted fs-5">Manajemen Perusahaan Farmasi</p>
+            <p class="text-muted fs-5">Manajemen Bahan Aktif</p>
         </div>
     </div>
 </section>
-
-
 <footer class="bg-dark text-light py-4 mt-5">
     <div class="container text-center">
         <p class="mb-1">© 2025 DMS. All rights reserved.</p>
@@ -262,27 +173,5 @@
     </div>
 </footer>
 
-
-<script>
-
-    function loadDeferredResources() {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js';
-        script.crossOrigin = 'anonymous';
-        script.async = true;
-        document.body.appendChild(script);
-
-        const animateScript = document.createElement('script');
-        animateScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
-        document.head.appendChild(animateScript);
-    }
-
-    if (window.requestIdleCallback) {
-        window.requestIdleCallback(loadDeferredResources);
-    } else {
-        window.addEventListener('load', loadDeferredResources);
-    }
-</script>
 </body>
-
 </html>
