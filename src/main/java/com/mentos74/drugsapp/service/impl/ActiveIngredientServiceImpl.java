@@ -1,8 +1,6 @@
 package com.mentos74.drugsapp.service.impl;
 
-import com.mentos74.drugsapp.dto.ActiveIngredientCreateRequestDTO;
-import com.mentos74.drugsapp.dto.ActiveIngredientResponseRequestDTO;
-import com.mentos74.drugsapp.dto.ActiveIngredientUpdateRequestDTO;
+import com.mentos74.drugsapp.dto.ActiveIngredientRequestDTO;
 import com.mentos74.drugsapp.entity.ActiveIngredient;
 import com.mentos74.drugsapp.repository.ActiveIngredientRepository;
 import com.mentos74.drugsapp.service.ActiveIngredientService;
@@ -19,7 +17,7 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
 
 
     @Override
-    public void createNewActiveIngredient(ActiveIngredientCreateRequestDTO dto) {
+    public void createNewActiveIngredient(ActiveIngredientRequestDTO dto) {
 
         ActiveIngredient api = new ActiveIngredient();
         api.setDescription(dto.getDescription());
@@ -34,7 +32,7 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
     }
 
     @Override
-    public void updateActiveIngredient(ActiveIngredientUpdateRequestDTO dto) {
+    public void updateActiveIngredient(ActiveIngredientRequestDTO dto) {
 
         ActiveIngredient api = activeINgredientRepository.findById(dto.getActiveIngredientId())
                 .orElseThrow(() -> new RuntimeException("id not found"));
@@ -59,10 +57,10 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
     }
 
     @Override
-    public List<ActiveIngredientResponseRequestDTO> listActiveIngredient() {
+    public List<ActiveIngredientRequestDTO> listActiveIngredient() {
 
         return activeINgredientRepository.findByDeletedFalseOrderByUpdatedAtDesc().stream().map((c) -> {
-            ActiveIngredientResponseRequestDTO dto = new ActiveIngredientResponseRequestDTO();
+            ActiveIngredientRequestDTO dto = new ActiveIngredientRequestDTO();
             dto.setActiveIngredientId(c.getActiveIngredientId());
             dto.setNameActiveIngredient(c.getNameActiveIngredient());
             dto.setDescription(c.getDescription());
@@ -74,11 +72,11 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
     }
 
     @Override
-    public ActiveIngredientUpdateRequestDTO findActiveIngredientById(Long id) {
+    public ActiveIngredientRequestDTO findActiveIngredientById(Long id) {
         ActiveIngredient activeIngredient =  activeINgredientRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("id not found"));
 
-        ActiveIngredientUpdateRequestDTO dto = new ActiveIngredientUpdateRequestDTO();
+        ActiveIngredientRequestDTO dto = new ActiveIngredientRequestDTO();
         dto.setActiveIngredientId(activeIngredient.getActiveIngredientId());
         dto.setDescription(activeIngredient.getDescription());
         dto.setNameActiveIngredient(activeIngredient.getNameActiveIngredient());

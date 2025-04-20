@@ -1,9 +1,8 @@
 package com.mentos74.drugsapp.web;
 
-import com.mentos74.drugsapp.dto.ActiveIngredientCreateRequestDTO;
-import com.mentos74.drugsapp.dto.ActiveIngredientResponseRequestDTO;
 import java.io.IOException;
-import com.mentos74.drugsapp.dto.ActiveIngredientUpdateRequestDTO;
+
+import com.mentos74.drugsapp.dto.ActiveIngredientRequestDTO;
 import com.mentos74.drugsapp.service.ActiveIngredientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Base64;
 import java.util.List;
 
-//todo bikin return add edit nya jadi json aja
+//todo dijadiin submit ajax aja besok
 
 @Controller
 public class ActiveIngredientResource {
@@ -26,14 +25,14 @@ public class ActiveIngredientResource {
 
     @GetMapping("/active-ingredient/list")
     public String listActiveIngredients(Model model) {
-        List<ActiveIngredientResponseRequestDTO> listIngredients = activeIngredientService.listActiveIngredient();
+        List<ActiveIngredientRequestDTO> listIngredients = activeIngredientService.listActiveIngredient();
         model.addAttribute("listIngredients", listIngredients);
         return "active_ingredient/list_activeIngredient";
     }
 
     @GetMapping("/active-ingredient/add")
     public String addActiveIngredient(Model model) {
-        model.addAttribute("dto", new ActiveIngredientCreateRequestDTO());
+        model.addAttribute("dto", new ActiveIngredientRequestDTO());
         return "/active_ingredient/add_activeIngredient :: modalContent";
     }
 
@@ -42,14 +41,14 @@ public class ActiveIngredientResource {
 
     @PostMapping("/active-ingredient/add")
     public String addActiveIngredientNew(
-            @ModelAttribute("dto") @Valid ActiveIngredientCreateRequestDTO addActiveDTO,
+            @ModelAttribute("dto") @Valid ActiveIngredientRequestDTO addActiveDTO,
             BindingResult bindingResult,
             @RequestParam("chemicalStructureFile") MultipartFile file,
             Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("dto", addActiveDTO);
-            return "/active_ingredient/add_activeIngredient";
+            return "/active_ingredient/add_activeIngredient :: modalContent";
         }
 
         if (file != null && !file.isEmpty()) {
@@ -59,7 +58,7 @@ public class ActiveIngredientResource {
             } catch (IOException e) {
                 bindingResult.rejectValue("chemicalStructure", "error.fileUpload", "Failed to process file.");
                 model.addAttribute("dto", addActiveDTO);
-                return "/active_ingredient/add_activeIngredient";
+                return "/active_ingredient/add_activeIngredient :: modalContent";
             }
         }
 
@@ -71,21 +70,23 @@ public class ActiveIngredientResource {
 
     @GetMapping("/active-ingredient/edit/{id}")
     public String editActiveIngredient(@PathVariable Long id, Model model) {
-        ActiveIngredientUpdateRequestDTO editActiveDTO = activeIngredientService.findActiveIngredientById(id);
+        System.out.println("masuk sini jir1");
+        ActiveIngredientRequestDTO editActiveDTO = activeIngredientService.findActiveIngredientById(id);
         model.addAttribute("dto", editActiveDTO);
         return "/active_ingredient/edit_activeIngredient :: modalContent";
     }
 
     @PostMapping("/active-ingredient/edit/{id}")
     public String editActiveIngredientNew(@PathVariable Long id,
-            @ModelAttribute("dto") @Valid ActiveIngredientUpdateRequestDTO editActiveDTO,
+            @ModelAttribute("dto") @Valid ActiveIngredientRequestDTO editActiveDTO,
             BindingResult bindingResult,
             @RequestParam("chemicalStructureFile") MultipartFile file,
             Model model) {
-
+        System.out.println("masuk sini jir2");
         if (bindingResult.hasErrors()) {
+        System.out.println("masuk sini jir3");
             model.addAttribute("dto", editActiveDTO);
-            return "/active_ingredient/edit_activeIngredient";
+            return "/active_ingredient/edit_activeIngredient :: modalContent";
         }
 
         if (file != null && !file.isEmpty()) {
@@ -95,12 +96,13 @@ public class ActiveIngredientResource {
             } catch (IOException e) {
                 bindingResult.rejectValue("chemicalStructure", "error.fileUpload", "Failed to process file.");
                 model.addAttribute("dto", editActiveDTO);
-                return "/active_ingredient/edit_activeIngredient";
+                return "/active_ingredient/edit_activeIngredient :: modalContent";
             }
         }
 
         activeIngredientService.updateActiveIngredient(editActiveDTO);
 
+        System.out.println("masuk sini jir4");
         return "redirect:/active-ingredient/list";
     }
 
