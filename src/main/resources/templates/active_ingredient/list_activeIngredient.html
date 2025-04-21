@@ -6,6 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
             crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         :root {
             --primary-color: #007bff;
@@ -28,7 +29,7 @@
         }
 
         .navbar-brand, .nav-link {
-            font-weight: 700;       
+            font-weight: 700;
             transition: var(--transition);
             padding: 0.5rem 1rem;
         }
@@ -74,6 +75,69 @@
             max-width: 100px;
             height: auto;
         }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+
+        .form-group label {
+            width: 150px;
+            font-weight: bold;
+        }
+
+
+        .form-group input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .modal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1050;
+            overflow: auto;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 600px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-lg);
+            animation: fadeIn 0.3s ease-in-out;
+            position: relative;
+            text-align: left;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -117,7 +181,9 @@
     <h1 class="mb-4 text-center">Active Ingredients</h1>
 
     <div class="d-flex justify-content-end mb-3">
-        <a onclick="loadModal('/active-ingredient/add')" class="btn btn-primary" >Add New</a>
+        <a id="addBtn" class="btn btn-primary me-2">Add</a>
+        <a id="editBtn" class="btn btn-primary me-2">Edit</a>
+        <a class="btn btn-danger btn-delete-ingredient" id="deleteBtn">Delete</a>
     </div>
 
     <div class="table-responsive">
@@ -133,17 +199,18 @@
             </thead>
             <tbody>
             <tr th:each="ingredient, iterStat : ${listIngredients}">
-                <td th:text="${iterStat.index + 1}"></td>
                 <td>
-                    <a th:text="${ingredient.nameActiveIngredient}"
-                       style="color: blue; text-decoration: underline; cursor: pointer;"
-                       th:attr="onclick='loadModal(\'/active-ingredient/edit/' + ${ingredient.activeIngredientId} + '\')'">
-                    </a>
+                    <input type="checkbox"
+                           class="ingredientCheckbox"
+                           th:value="${ingredient.activeIngredientId}"/>
                 </td>
+                <td th:text="${ingredient.nameActiveIngredient}"></td>
                 <td>
                     <img th:if="${ingredient.chemicalStructure != null}"
                          th:src="'data:image/png;base64,' + ${ingredient.chemicalStructure}"
-                         alt="Chemical Structure" class="img-thumbnail">
+                         alt="Chemical Structure"
+                         class="img-thumbnail"
+                         style="max-height: 50px;">
                 </td>
                 <td th:text="${ingredient.chemicalFormula}"></td>
                 <td th:text="${ingredient.description}"></td>
@@ -151,31 +218,160 @@
             </tbody>
         </table>
     </div>
-    <div class="modal fade" id="activeIngredientModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center" id="modalLabel">Active Ingredient</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+
+    <div id="ingredientPopup" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h4 id="popupTitle">Add Active Ingredient</h4>
+            <form id="ingredientForm" enctype="multipart/form-data">
+                <input type="hidden" id="ingredientId" name="activeIngredientId"/>
+
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" id="ingredientName" name="nameActiveIngredient"
+                           required class="form-control"/>
                 </div>
-                <div class="modal-body" id="modalContent">
+                <div class="form-group">
+                    <label>Chemical Formula:</label>
+                    <input type="text" id="ingredientFormula" name="chemicalFormula"
+                           required class="form-control"/>
                 </div>
-            </div>
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea id="ingredientDescription" name="description"
+                              required class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Chemical Structure:</label>
+                    <input type="file" id="ingredientStructure" name="chemicalStructureFile"
+                           accept="image/*" class="form-control"/>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <button id="closePopupBtn" type="button" class="btn btn-secondary">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
-
 </div>
 
+
 <script>
-    function loadModal(url) {
-        fetch(url)
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('modalContent').innerHTML = html;
-                new bootstrap.Modal(document.getElementById('activeIngredientModal')).show();
-            })
-            .catch(error => console.error('Error loading modal:', error));
-    }
+    $(document).ready(function () {
+        $("#ingredientPopup").hide();
+
+        function openIngredientPopup(isEdit = false, id = '', name = '', description = '') {
+            if (isEdit) {
+                $("#popupTitle").text("Edit Ingredient");
+                $("#ingredientId").val(id);
+                $("#ingredientName").val(name);
+                $("#ingredientDescription").val(description);
+            } else {
+                $("#popupTitle").text("Add Ingredient");
+                $("#ingredientId").val('');
+                $("#ingredientName").val('');
+                $("#ingredientDescription").val('');
+            }
+            $("#ingredientPopup").show();
+        }
+
+        function closeIngredientPopup() {
+            $("#ingredientPopup").hide();
+        }
+
+        $("#addBtn").click(function () {
+            openIngredientPopup(false);
+        });
+
+        $("#editBtn").click(function () {
+            let selected = $(".ingredientCheckbox:checked");
+            if (selected.length !== 1) {
+                alert("Please select an ingredient to edit.");
+                return;
+            }
+
+            let selectedRow = selected.closest("tr");
+            let id = selected.val();
+            let name = selectedRow.find("td:eq(1)").text();
+            let description = selectedRow.find("td:eq(2)").text();
+
+            openIngredientPopup(true, id, name, description);
+        });
+
+        $("#deleteBtn").click(function () {
+            let selectedIds = $(".ingredientCheckbox:checked").map(function () {
+                return $(this).val();
+            }).get();
+
+            if (selectedIds.length === 0) {
+                alert("Please select ingredient(s) to delete.");
+                return;
+            }
+
+            if (confirm("Are you sure want to delete this ingredient(s)?")) {
+                $.ajax({
+                    url: `/ingredient/delete/${selectedIds}`,
+                    method: "POST",
+                    success: function (result) {
+                        if (result.status === "success") {
+                            alert("Ingredient(s) deleted successfully!");
+                            location.reload();
+                        } else {
+                            alert("Failed to delete ingredient(s).");
+                        }
+                    },
+                    error: function () {
+                        alert("Error deleting ingredient(s).");
+                    }
+                });
+            }
+        });
+
+        $("#closePopupBtn, .close").click(function () {
+            closeIngredientPopup();
+        });
+
+        $(window).click(function (event) {
+            if ($(event.target).is("#ingredientPopup")) {
+                closeIngredientPopup();
+            }
+        });
+
+        $("#ingredientForm").submit(function (e) {
+            e.preventDefault();
+            let formData = {
+                id: $("#ingredientId").val(),
+                name: $("#ingredientName").val(),
+                description: $("#ingredientDescription").val()
+            };
+
+            $.ajax({
+                url: "/ingredient" + (formData.id ? "/update" : "/add"),
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(formData),
+                success: function (result) {
+                    if (result.status === "success") {
+                        alert("Save successful!");
+                        location.reload();
+                    } else {
+                        alert("Failed to process request.");
+                    }
+                },
+                error: function () {
+                    alert("Error processing request.");
+                }
+            });
+        });
+
+        $(".ingredientCheckbox").change(function () {
+            $(".ingredientCheckbox").not(this).prop("checked", false);
+        });
+    });
+
+
 </script>
 </body>
 

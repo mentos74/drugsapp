@@ -1,6 +1,6 @@
 package com.mentos74.drugsapp.service;
 
-import com.mentos74.drugsapp.dto.ActiveIngredientRequestDTO;
+import com.mentos74.drugsapp.dto.ActiveIngredientDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,14 +8,14 @@ import java.util.List;
 @Service
 public interface ActiveIngredientService {
 
-    public void createNewActiveIngredient(ActiveIngredientRequestDTO dto);
+    public void createNewActiveIngredient(ActiveIngredientDTO dto);
 
-    public void updateActiveIngredient(ActiveIngredientRequestDTO dto);
+    public void updateActiveIngredient(ActiveIngredientDTO dto);
 
     public void deleteActiveIngredient(Long id);
 
-    public List<ActiveIngredientRequestDTO> listActiveIngredient();
+    public List<ActiveIngredientDTO> listActiveIngredient();
 
-    public ActiveIngredientRequestDTO findActiveIngredientById(Long id);
+    public ActiveIngredientDTO findActiveIngredientById(Long id);
 
 }
