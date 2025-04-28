@@ -1,8 +1,6 @@
 package com.mentos74.drugsapp.dto;
 
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -11,7 +9,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Data
 public class ActiveIngredientDTO implements Serializable {
 

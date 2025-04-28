@@ -17,10 +17,9 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
-//todo bikin servicenya sama benerin buat gambarnya di kasih kondisi kalo null dia ga bakal ke update
 
 @Controller
-public class DrugResource {
+public class DrugResourceController {
 
     @Autowired
     DrugService drugService;

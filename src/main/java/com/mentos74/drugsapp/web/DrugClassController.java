@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 
 @Controller
-public class DrugClassResource {
+public class DrugClassController {
 
     @Autowired
     DrugClassService drugClassSevice;

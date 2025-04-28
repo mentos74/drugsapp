@@ -87,14 +87,26 @@
 
         .form-group {
             display: flex;
-            align-items: center;
-            margin-bottom: 10px;
+            flex-direction: column; /* Mengatur label dan input dalam kolom */
+            margin-bottom: 15px;
         }
 
-
         .form-group label {
-            width: 150px;
-            font-weight: bold;
+            margin-bottom: 5px; /* Jarak antara label dan input */
+            font-weight: bold; /* Menebalkan teks label */
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            outline: none;
         }
 
 
@@ -112,7 +124,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             justify-content: center;
             align-items: center;
             z-index: 1050;
@@ -125,19 +137,73 @@
             background: #fff;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             animation: fadeIn 0.3s ease-in-out;
             position: relative;
             text-align: left;
         }
 
+        .modal-title {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
         .close {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 24px;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
             cursor: pointer;
+            color: #aaa;
         }
+
+        .close:hover {
+            color: #000;
+        }
+
+
     </style>
 </head>
 
@@ -223,29 +289,25 @@
     <div id="ingredientPopup" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h4 id="popupTitle">Add Active Ingredient</h4>
+            <h4 id="popupTitle" class="modal-title">Add Active Ingredient</h4>
             <form id="ingredientForm" enctype="multipart/form-data">
                 <input type="hidden" id="ingredientId" name="activeIngredientId"/>
 
                 <div class="form-group">
-                    <label>Name:</label>
-                    <input type="text" id="ingredientName" name="nameActiveIngredient"
-                           required class="form-control"/>
+                    <label for="ingredientName">Name:</label>
+                    <input type="text" id="ingredientName" name="nameActiveIngredient" required class="form-control"/>
                 </div>
                 <div class="form-group">
-                    <label>Chemical Formula:</label>
-                    <input type="text" id="ingredientFormula" name="chemicalFormula"
-                           required class="form-control"/>
+                    <label for="chemicalFormula">Chemical Formula:</label>
+                    <input type="text" id="chemicalFormula" name="chemicalFormula" required class="form-control"/>
                 </div>
                 <div class="form-group">
-                    <label>Description:</label>
-                    <textarea id="ingredientDescription" name="description"
-                              required class="form-control"></textarea>
+                    <label for="ingredientDescription">Description:</label>
+                    <textarea id="ingredientDescription" name="description" required class="form-control"></textarea>
                 </div>
                 <div class="form-group">
-                    <label>Chemical Structure:</label>
-                    <input type="file" id="ingredientStructure" name="chemicalStructureFile"
-                           accept="image/*" class="form-control"/>
+                    <label for="ingredientStructure">Chemical Structure:</label>
+                    <input type="file" id="ingredientStructure" name="chemicalStructureFile" accept="image/*" class="form-control"/>
                 </div>
 
                 <div class="d-flex justify-content-end gap-2 mt-3">
@@ -262,18 +324,22 @@
     $(document).ready(function () {
         $("#ingredientPopup").hide();
 
-        function openIngredientPopup(isEdit = false, id = '', name = '', description = '') {
+        function openIngredientPopup(isEdit = false, id = '', name = '', description = '', chemicalFormula ='', ) {
             if (isEdit) {
                 $("#popupTitle").text("Edit Ingredient");
                 $("#ingredientId").val(id);
                 $("#ingredientName").val(name);
                 $("#ingredientDescription").val(description);
+                $("#chemicalFormula").val(chemicalFormula);
             } else {
                 $("#popupTitle").text("Add Ingredient");
                 $("#ingredientId").val('');
                 $("#ingredientName").val('');
                 $("#ingredientDescription").val('');
+                $("#chemicalFormula").val('');
             }
+            console.log($("#ingredientId").val());
+            console.log(id);
             $("#ingredientPopup").show();
         }
 
@@ -285,20 +351,37 @@
             openIngredientPopup(false);
         });
 
-        $("#editBtn").click(function () {
-            let selected = $(".ingredientCheckbox:checked");
-            if (selected.length !== 1) {
-                alert("Please select an ingredient to edit.");
-                return;
-            }
+        $("#editBtn").click(createEditButtonHandler());
 
-            let selectedRow = selected.closest("tr");
-            let id = selected.val();
-            let name = selectedRow.find("td:eq(1)").text();
-            let description = selectedRow.find("td:eq(2)").text();
+        function createEditButtonHandler() {
+            return function () {
+                let selected = $(".ingredientCheckbox:checked");
+                if (selected.length !== 1) {
+                    alert("Please select an ingredient to edit.");
+                    return;
+                }
 
-            openIngredientPopup(true, id, name, description);
-        });
+                let selectedId = selected.val();
+
+                $.getJSON(`/active-ingredient/detail/${selectedId}`, function (data) {
+                    if (!data || $.isEmptyObject(data)) {
+                        alert("Failed to load ingredient data.");
+                        return;
+                    }
+
+
+                    let id = data.activeIngredientId;
+                    let name = data.nameActiveIngredient;
+                    let description = data.description;
+                    let chemicalFormula = data.chemicalFormula;
+
+                    console.log(id, name, description, chemicalFormula);
+
+
+                    openIngredientPopup(true, id, name, description, chemicalFormula);
+                });
+            };
+        }
 
         $("#deleteBtn").click(function () {
             let selectedIds = $(".ingredientCheckbox:checked").map(function () {
@@ -312,18 +395,19 @@
 
             if (confirm("Are you sure want to delete this ingredient(s)?")) {
                 $.ajax({
-                    url: `/ingredient/delete/${selectedIds}`,
+                    url: `/active-ingredient/delete/${selectedIds}`,
                     method: "POST",
                     success: function (result) {
                         if (result.status === "success") {
-                            alert("Ingredient(s) deleted successfully!");
+                            alert("Ingredient deleted successfully!");
                             location.reload();
                         } else {
-                            alert("Failed to delete ingredient(s).");
+                            alert("Failed to delete ingredient.");
+                            location.reload();
                         }
                     },
                     error: function () {
-                        alert("Error deleting ingredient(s).");
+                        alert("Error deleting ingredient.");
                     }
                 });
             }
@@ -341,17 +425,20 @@
 
         $("#ingredientForm").submit(function (e) {
             e.preventDefault();
-            let formData = {
-                id: $("#ingredientId").val(),
-                name: $("#ingredientName").val(),
-                description: $("#ingredientDescription").val()
-            };
 
+            let form = $('#ingredientForm')[0];
+            let formData = new FormData(form);
+
+            let id = $("#ingredientId").val();
+            let url = id ? `/active-ingredient/edit/${id}` : "/active-ingredient/add";
+            console.log(id);
+            console.log(url);
             $.ajax({
-                url: "/ingredient" + (formData.id ? "/update" : "/add"),
+                url: url,
                 type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(formData),
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: function (result) {
                     if (result.status === "success") {
                         alert("Save successful!");
@@ -365,6 +452,7 @@
                 }
             });
         });
+
 
         $(".ingredientCheckbox").change(function () {
             $(".ingredientCheckbox").not(this).prop("checked", false);

@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @Controller()
-public class CompanyResource {
+public class CompanyController {
 
     @Autowired
     CompanyService companyService;
