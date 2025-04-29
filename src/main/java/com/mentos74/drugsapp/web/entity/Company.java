@@ -25,6 +25,8 @@ public class Company {
 
     private String companyPhone;
 
+    private String companyCountry;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

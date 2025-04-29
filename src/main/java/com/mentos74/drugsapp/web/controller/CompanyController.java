@@ -1,17 +1,16 @@
 package com.mentos74.drugsapp.web.controller;
 
 
-import com.mentos74.drugsapp.web.dto.CompanyCreateRequestDTO;
-import com.mentos74.drugsapp.web.dto.CompanyResponseRequestDTO;
-import com.mentos74.drugsapp.web.dto.CompanyUpdateRequestDTO;
+import com.mentos74.drugsapp.web.dto.CompanyDTO;
 import com.mentos74.drugsapp.web.service.CompanyService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -21,59 +20,51 @@ public class CompanyController {
     @Autowired
     CompanyService companyService;
 
-
     @GetMapping("/company/list")
     public String listCompany(Model model) {
-        List<CompanyResponseRequestDTO> listCompany = companyService.listCompany();
+        List<CompanyDTO> listCompany = companyService.listCompany();
+        System.out.println("hehe >>"+ listCompany);
         model.addAttribute("listCompany", listCompany);
         return "/company/list_company";
     }
 
-
-    @GetMapping("/company/add")
-    public String addCompany(Model model) {
-        CompanyCreateRequestDTO companyCreateRequestDTO = new CompanyCreateRequestDTO();
-        model.addAttribute("companyCreateRequestDTO", companyCreateRequestDTO);
-        return "/company/add_company";
+    @GetMapping("/company/detail/{id}")
+    public ResponseEntity<?> getCompanyDetails(@PathVariable Long id) {
+        CompanyDTO dto = companyService.findCompanyById(id);
+        return ResponseEntity.ok().body(dto);
     }
+
 
     @PostMapping("/company/add")
-    public String addNewCompany(@ModelAttribute("companyCreateRequestDTO") @Valid CompanyCreateRequestDTO companyCreateRequestDTO,
-                                BindingResult bindingResult,Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("companyCreateRequestDTO", companyCreateRequestDTO);
-            return "/company/add_company";
-        }
-        companyService.createNewCompany(companyCreateRequestDTO);
-        return "redirect:/company/list";
-    }
-
-
-    @GetMapping("/company/edit/{id}")
-    public String editCompanyNew(@PathVariable Long id, Model model) {
-        CompanyUpdateRequestDTO companyUpdateRequestDTO = companyService.findCompanyById(id);
-        model.addAttribute("companyUpdateRequestDTO", companyUpdateRequestDTO);
-        return "/company/edit_company";
-    }
-
-    @PostMapping("/company/edit/{id}")
-    public String editCompany(@PathVariable Long id,
-                             @ModelAttribute("companyUpdateRequestDTO") @Valid CompanyUpdateRequestDTO companyUpdateRequestDTO,
-                             BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("companyUpdateRequestDTO", companyUpdateRequestDTO);
-            return "/company/edit_company";
+    public ResponseEntity<?> addNewCompany(@ModelAttribute CompanyDTO dto) {
+        try {
+            System.out.println("hehe add>>"+dto);
+            companyService.createNewCompany(dto);
+            return ResponseEntity.ok(Collections.singletonMap("status", "success"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("status", "error"));
         }
 
-        companyService.updateCompany(companyUpdateRequestDTO, id);
-        return "redirect:/company/list";
     }
 
+    @PostMapping("/company/edit")
+    public ResponseEntity<?>  editCompany(@ModelAttribute CompanyDTO dto) {
+        try {
+            companyService.updateCompany(dto);
+            return ResponseEntity.ok(Collections.singletonMap("status", "success"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("status", "error"));
+        }
+    }
 
     @PostMapping("/company/delete/{id}")
-    public String deleteCompany(@PathVariable Long id) {
-        companyService.deleteCompany(id);
-        return "redirect:/company/list";
+    public ResponseEntity<?> deleteCompany(@PathVariable Long id) {
+        try {
+            companyService.deleteCompany(id);
+            return ResponseEntity.ok(Collections.singletonMap("status", "success"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("status", "error"));
+        }
     }
 
 

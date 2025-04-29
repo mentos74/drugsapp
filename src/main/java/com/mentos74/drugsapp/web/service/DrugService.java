@@ -19,7 +19,7 @@ public interface DrugService {
 
     public void deleteDrug(Long id);
 
-    public List<CompanyResponseRequestDTO> listCompany();
+    public List<CompanyDTO> listCompany();
 
     public List<DrugClassResponseRequestDTO> listDrugClass();
 

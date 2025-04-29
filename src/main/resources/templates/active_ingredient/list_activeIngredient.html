@@ -446,11 +446,11 @@
         $("#ingredientForm").submit(function (e) {
             e.preventDefault();
 
-            let form = $('#ingredientForm')[0];
-            let formData = new FormData(form);
+            const form = $('#ingredientForm')[0];
+            const formData = new FormData(form);
 
-            let id = $("#ingredientId").val();
-            let url = id ? `/active-ingredient/edit` : "/active-ingredient/add";
+            const id = $("#ingredientId").val();
+            const url = id ? `/active-ingredient/edit` : "/active-ingredient/add";
             console.log(id);
             console.log(url);
             $.ajax({

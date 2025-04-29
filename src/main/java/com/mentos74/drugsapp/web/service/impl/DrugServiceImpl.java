@@ -215,7 +215,7 @@ public class DrugServiceImpl implements DrugService {
     }
 
     @Override
-    public List<CompanyResponseRequestDTO> listCompany() {
+    public List<CompanyDTO> listCompany() {
         return companyService.listCompany();
     }
 
