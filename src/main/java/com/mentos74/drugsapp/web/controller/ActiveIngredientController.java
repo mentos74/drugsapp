@@ -18,7 +18,6 @@ import java.util.Collections;
 import java.util.List;
 
 
-//benerin upload jangan pake base64
 
 @Controller
 public class ActiveIngredientController {
@@ -29,7 +28,6 @@ public class ActiveIngredientController {
     @Autowired
     AttachmentService attachmentService;
 
-    //todo kalo di edit terus attachmentnya kosong masih error, tapi kalo ada attachmentnya ga error.
 
     @GetMapping("/active-ingredient/list")
     public String listActiveIngredients(Model model) {
@@ -42,7 +40,7 @@ public class ActiveIngredientController {
     public ResponseEntity<?> editIngredient(@ModelAttribute ActiveIngredientDTO dto,
                                             @RequestParam("chemicalStructureFile") MultipartFile file) {
         try {
-            Attachment attachment = new Attachment();
+            Attachment attachment = null;
             if (file != null && !file.isEmpty()) {
                 try {
                     attachment = attachmentService.saveAttachment(file, AttachmentType.CHEMICAL_FORMULA_PHOTO);
@@ -61,7 +59,7 @@ public class ActiveIngredientController {
     public ResponseEntity<?> addIngredient(@ModelAttribute ActiveIngredientDTO dto,
                                            @RequestParam("chemicalStructureFile") MultipartFile file) {
         try {
-            Attachment attachment = new Attachment();
+            Attachment attachment = null;
             if (file != null && !file.isEmpty()) {
                 try {
                      attachment = attachmentService.saveAttachment(file, AttachmentType.CHEMICAL_FORMULA_PHOTO);

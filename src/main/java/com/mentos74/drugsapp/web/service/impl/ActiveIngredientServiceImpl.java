@@ -29,15 +29,21 @@ public class ActiveIngredientServiceImpl implements ActiveIngredientService {
     public void createNewActiveIngredient(ActiveIngredientDTO dto, Attachment attachment) {
 
         ActiveIngredient api = new ActiveIngredient();
-        api.setDescription(dto.getDescription());
-        api.setNameActiveIngredient(dto.getNameActiveIngredient());
-        api.setChemicalFormula(dto.getChemicalFormula());
-        api.setChemicalStructure(attachment);
-        api.setDeleted(false);
-        api.prePersist();
+        try {
 
+            api.setDescription(dto.getDescription());
+            api.setNameActiveIngredient(dto.getNameActiveIngredient());
+            api.setChemicalFormula(dto.getChemicalFormula());
+            if (attachment != null) {
+                api.setChemicalStructure(attachment);
+            }
+            api.setDeleted(false);
+            api.prePersist();
 
-        activeINgredientRepository.save(api);
+            activeINgredientRepository.save(api);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
