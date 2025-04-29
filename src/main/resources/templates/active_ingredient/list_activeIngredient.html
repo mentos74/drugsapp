@@ -272,11 +272,11 @@
                 </td>
                 <td th:text="${ingredient.nameActiveIngredient}"></td>
                 <td>
-                    <img th:if="${ingredient.chemicalStructure != null}"
-                         th:src="'data:image/png;base64,' + ${ingredient.chemicalStructure}"
+                    <img th:if="${ingredient.chemicalStructureUrl != null}"
+                         th:src="@{${ingredient.chemicalStructureUrl}}"
                          alt="Chemical Structure"
                          class="img-thumbnail"
-                         style="max-height: 50px;">
+                         style="max-height: 100px;">
                 </td>
                 <td th:text="${ingredient.chemicalFormula}"></td>
                 <td th:text="${ingredient.description}"></td>
@@ -306,8 +306,9 @@
                     <textarea id="ingredientDescription" name="description" required class="form-control"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="ingredientStructure">Chemical Structure:</label>
-                    <input type="file" id="ingredientStructure" name="chemicalStructureFile" accept="image/*" class="form-control"/>
+                    <label for="chemicalStructureFile">Chemical Structure:</label>
+                    <input type="file" id="chemicalStructureFile" name="chemicalStructureFile" accept="image/*" class="form-control"/>
+                    <img id="structurePreview" src="#" alt="Image Preview" class="img-thumbnail mt-2" style="display: none; max-height: 150px;">
                 </div>
 
                 <div class="d-flex justify-content-end gap-2 mt-3">
@@ -324,28 +325,49 @@
     $(document).ready(function () {
         $("#ingredientPopup").hide();
 
-        function openIngredientPopup(isEdit = false, id = '', name = '', description = '', chemicalFormula ='', ) {
+        function openIngredientPopup(isEdit = false, id = '', name = '', description = '', chemicalFormula ='', chemicalStructureUrl = '') {
+
+            $("#ingredientForm")[0].reset();
+            $("#previewImage").attr("src", "").hide();
+
             if (isEdit) {
                 $("#popupTitle").text("Edit Ingredient");
                 $("#ingredientId").val(id);
                 $("#ingredientName").val(name);
                 $("#ingredientDescription").val(description);
                 $("#chemicalFormula").val(chemicalFormula);
+                if (chemicalStructureUrl) {
+                    $("#structurePreview").attr("src", chemicalStructureUrl).show();
+                } else {
+                    $("#structurePreview").hide();
+                }
             } else {
                 $("#popupTitle").text("Add Ingredient");
                 $("#ingredientId").val('');
                 $("#ingredientName").val('');
                 $("#ingredientDescription").val('');
                 $("#chemicalFormula").val('');
+                $("#structurePreview").hide();
             }
-            console.log($("#ingredientId").val());
-            console.log(id);
             $("#ingredientPopup").show();
         }
+
 
         function closeIngredientPopup() {
             $("#ingredientPopup").hide();
         }
+
+        $("#chemicalStructureFile").change(function () {
+            const file = this.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#structurePreview").attr("src", e.target.result).show();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
 
         $("#addBtn").click(function () {
             openIngredientPopup(false);
@@ -369,17 +391,15 @@
                         return;
                     }
 
-
                     let id = data.activeIngredientId;
                     let name = data.nameActiveIngredient;
                     let description = data.description;
                     let chemicalFormula = data.chemicalFormula;
+                    let chemicalStructureUrl = data.chemicalStructureUrl;
 
-                    console.log(id, name, description, chemicalFormula);
-
-
-                    openIngredientPopup(true, id, name, description, chemicalFormula);
+                    openIngredientPopup(true, id, name, description, chemicalFormula, chemicalStructureUrl);
                 });
+
             };
         }
 
@@ -430,7 +450,7 @@
             let formData = new FormData(form);
 
             let id = $("#ingredientId").val();
-            let url = id ? `/active-ingredient/edit/${id}` : "/active-ingredient/add";
+            let url = id ? `/active-ingredient/edit` : "/active-ingredient/add";
             console.log(id);
             console.log(url);
             $.ajax({
