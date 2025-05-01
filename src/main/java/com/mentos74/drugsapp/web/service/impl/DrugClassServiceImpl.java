@@ -1,6 +1,7 @@
 package com.mentos74.drugsapp.web.service.impl;
 
 import com.mentos74.drugsapp.web.dto.DrugClassCreateRequestDTO;
+import com.mentos74.drugsapp.web.dto.DrugClassDTO;
 import com.mentos74.drugsapp.web.dto.DrugClassResponseRequestDTO;
 import com.mentos74.drugsapp.web.dto.DrugClassUpdateRequestDTO;
 import com.mentos74.drugsapp.web.entity.DrugClass;
@@ -20,7 +21,7 @@ public class DrugClassServiceImpl implements DrugClassService {
     DrugClassRepository drugClassRepository;
 
     @Override
-    public void createDrugClass(DrugClassCreateRequestDTO dto) {
+    public void createDrugClass(DrugClassDTO dto) {
         DrugClass drugClass = new DrugClass();
         drugClass.setDrugClassName(dto.getDrugClassName());
         drugClass.setDrugClassDescription(dto.getDrugClassDescription());
@@ -31,9 +32,9 @@ public class DrugClassServiceImpl implements DrugClassService {
     }
 
     @Override
-    public void updateDrugClass(DrugClassUpdateRequestDTO dto, Long id) {
+    public void updateDrugClass(DrugClassDTO dto) {
 
-        DrugClass drugClass = drugClassRepository.findById(id).orElseThrow();
+        DrugClass drugClass = drugClassRepository.findById(dto.getDrugClassId()).orElseThrow();
         drugClass.setDrugClassName(dto.getDrugClassName());
         drugClass.setDrugClassDescription(dto.getDrugClassDescription());
         drugClass.preUpdate();
@@ -52,9 +53,9 @@ public class DrugClassServiceImpl implements DrugClassService {
     }
 
     @Override
-    public List<DrugClassResponseRequestDTO> listDrugClass() {
+    public List<DrugClassDTO> listDrugClass() {
         return drugClassRepository.findByDeletedFalseOrderByUpdatedAtDesc().stream().map((c) -> {
-                    DrugClassResponseRequestDTO dto = new DrugClassResponseRequestDTO();
+            DrugClassDTO dto = new DrugClassDTO();
                     dto.setDrugClassId(c.getDrugClassId());
                     dto.setDrugClassDescription(c.getDrugClassDescription());
                     dto.setDrugClassName(c.getDrugClassName());
@@ -65,10 +66,10 @@ public class DrugClassServiceImpl implements DrugClassService {
     }
 
     @Override
-    public DrugClassUpdateRequestDTO findDrugClassById(Long id) {
+    public DrugClassDTO findDrugClassById(Long id) {
 
         DrugClass drugClass = drugClassRepository.findById(id).orElseThrow();
-        DrugClassUpdateRequestDTO drugClassUpdateRequestDTO = new DrugClassUpdateRequestDTO();
+        DrugClassDTO drugClassUpdateRequestDTO = new DrugClassDTO();
         drugClassUpdateRequestDTO.setDeleted(drugClass.getDeleted());
         drugClassUpdateRequestDTO.setDrugClassDescription(drugClass.getDrugClassDescription());
         drugClassUpdateRequestDTO.setDrugClassName(drugClass.getDrugClassName());

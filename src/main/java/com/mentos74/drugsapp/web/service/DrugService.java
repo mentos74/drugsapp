@@ -2,6 +2,7 @@ package com.mentos74.drugsapp.web.service;
 
 
 import com.mentos74.drugsapp.web.dto.*;
+import com.mentos74.drugsapp.web.entity.DrugClass;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface DrugService {
 
     public List<CompanyDTO> listCompany();
 
-    public List<DrugClassResponseRequestDTO> listDrugClass();
+    public List<DrugClassDTO> listDrugClass();
 
     public List<ActiveIngredientDTO> listActiveIngredient();
 

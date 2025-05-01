@@ -220,7 +220,7 @@ public class DrugServiceImpl implements DrugService {
     }
 
     @Override
-    public List<DrugClassResponseRequestDTO> listDrugClass() {
+    public List<DrugClassDTO> listDrugClass() {
         return drugClassService.listDrugClass();
     }
 

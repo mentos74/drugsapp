@@ -288,34 +288,42 @@
 
     <div id="ingredientPopup" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h4 id="popupTitle" class="modal-title">Add Active Ingredient</h4>
-            <form id="ingredientForm" enctype="multipart/form-data">
-                <input type="hidden" id="ingredientId" name="activeIngredientId"/>
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h4 id="popupTitle" class="modal-title">Add Active Ingredient</h4>
+            </div>
+            <div class="modal-body">
+                <form id="ingredientForm" enctype="multipart/form-data">
+                    <input type="hidden" id="ingredientId" name="activeIngredientId"/>
 
-                <div class="form-group">
-                    <label for="ingredientName">Name:</label>
-                    <input type="text" id="ingredientName" name="nameActiveIngredient" required class="form-control"/>
-                </div>
-                <div class="form-group">
-                    <label for="chemicalFormula">Chemical Formula:</label>
-                    <input type="text" id="chemicalFormula" name="chemicalFormula" required class="form-control"/>
-                </div>
-                <div class="form-group">
-                    <label for="ingredientDescription">Description:</label>
-                    <textarea id="ingredientDescription" name="description" required class="form-control"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="chemicalStructureFile">Chemical Structure:</label>
-                    <input type="file" id="chemicalStructureFile" name="chemicalStructureFile" accept="image/*" class="form-control"/>
-                    <img id="structurePreview" src="#" alt="Image Preview" class="img-thumbnail mt-2" style="display: none; max-height: 150px;">
-                </div>
+                    <div class="form-group">
+                        <label for="ingredientName">Name:</label>
+                        <input type="text" id="ingredientName" name="nameActiveIngredient" required
+                               class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="chemicalFormula">Chemical Formula:</label>
+                        <input type="text" id="chemicalFormula" name="chemicalFormula" required class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="ingredientDescription">Description:</label>
+                        <textarea id="ingredientDescription" name="description" required
+                                  class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="chemicalStructureFile">Chemical Structure:</label>
+                        <input type="file" id="chemicalStructureFile" name="chemicalStructureFile" accept="image/*"
+                               class="form-control"/>
+                        <img id="structurePreview" src="#" alt="Image Preview" class="img-thumbnail mt-2"
+                             style="display: none; max-height: 150px;">
+                    </div>
 
-                <div class="d-flex justify-content-end gap-2 mt-3">
-                    <button type="submit" class="btn btn-success">Save</button>
-                    <button id="closePopupBtn" type="button" class="btn btn-secondary">Cancel</button>
-                </div>
-            </form>
+                    <div class="d-flex justify-content-end gap-2 mt-3">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <button id="closePopupBtn" type="button" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -325,7 +333,7 @@
     $(document).ready(function () {
         $("#ingredientPopup").hide();
 
-        function openIngredientPopup(isEdit = false, id = '', name = '', description = '', chemicalFormula ='', chemicalStructureUrl = '') {
+        function openIngredientPopup(isEdit = false, id = '', name = '', description = '', chemicalFormula = '', chemicalStructureUrl = '') {
 
             $("#ingredientForm")[0].reset();
             $("#previewImage").attr("src", "").hide();
@@ -409,11 +417,11 @@
             }).get();
 
             if (selectedIds.length === 0) {
-                alert("Please select ingredient(s) to delete.");
+                alert("Please select ingredient to delete.");
                 return;
             }
 
-            if (confirm("Are you sure want to delete this ingredient(s)?")) {
+            if (confirm("Are you sure want to delete this ingredient?")) {
                 $.ajax({
                     url: `/active-ingredient/delete/${selectedIds}`,
                     method: "POST",
