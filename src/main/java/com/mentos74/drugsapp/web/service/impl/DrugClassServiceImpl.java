@@ -1,9 +1,6 @@
 package com.mentos74.drugsapp.web.service.impl;
 
-import com.mentos74.drugsapp.web.dto.DrugClassCreateRequestDTO;
 import com.mentos74.drugsapp.web.dto.DrugClassDTO;
-import com.mentos74.drugsapp.web.dto.DrugClassResponseRequestDTO;
-import com.mentos74.drugsapp.web.dto.DrugClassUpdateRequestDTO;
 import com.mentos74.drugsapp.web.entity.DrugClass;
 import com.mentos74.drugsapp.web.repository.DrugClassRepository;
 import com.mentos74.drugsapp.web.service.DrugClassService;

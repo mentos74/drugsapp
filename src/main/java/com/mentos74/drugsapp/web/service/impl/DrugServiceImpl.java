@@ -2,10 +2,7 @@ package com.mentos74.drugsapp.web.service.impl;
 
 
 import com.mentos74.drugsapp.web.dto.*;
-import com.mentos74.drugsapp.web.entity.ActiveIngredient;
-import com.mentos74.drugsapp.web.entity.Company;
-import com.mentos74.drugsapp.web.entity.Drug;
-import com.mentos74.drugsapp.web.entity.DrugClass;
+import com.mentos74.drugsapp.web.entity.*;
 import com.mentos74.drugsapp.web.repository.ActiveIngredientRepository;
 import com.mentos74.drugsapp.web.repository.CompanyRepository;
 import com.mentos74.drugsapp.web.repository.DrugClassRepository;
@@ -51,7 +48,7 @@ public class DrugServiceImpl implements DrugService {
 
 
     @Override
-    public void createDrug(DrugCreateRequestDTO drugCreateRequestDTO, List<Long> activeIngredientIds, List<Long> drugClassIds, Long companyId) {
+    public void createDrug(DrugDTO drugCreateRequestDTO, List<Long> activeIngredientIds, List<Long> drugClassIds, Attachment attachment) {
         Drug drug = new Drug();
         drug.setDrugName(drugCreateRequestDTO.getDrugName());
         drug.setIndication(drugCreateRequestDTO.getIndication());
@@ -85,7 +82,7 @@ public class DrugServiceImpl implements DrugService {
     }
 
     @Override
-    public void updateDrug(DrugUpdateRequestDTO drugUpdateRequestDTO, List<Long> activeIngredientIds, List<Long> drugClassIds, Long companyId) {
+    public void updateDrug(DrugDTO drugUpdateRequestDTO, List<Long> activeIngredientIds, List<Long> drugClassIds,  Attachment attachment) {
 
         Drug drug = drugRepository.findById(drugUpdateRequestDTO.getDrugId())
                 .orElseThrow(() -> new RuntimeException("Drug not found"));
@@ -114,8 +111,8 @@ public class DrugServiceImpl implements DrugService {
         drug.setDrugClasses(drugClasses);
 
 
-        Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new RuntimeException("Company not found: " + companyId));
+        Company company = companyRepository.findById(drugUpdateRequestDTO.getCompany().getCompanyId())
+                .orElseThrow(() -> new RuntimeException("Company not found: " + drugUpdateRequestDTO.getCompany().getCompanyId()));
         drug.setCompany(company);
 
 
@@ -123,9 +120,9 @@ public class DrugServiceImpl implements DrugService {
     }
 
     @Override
-    public List<DrugResponseRequestDTO> listDrugs() {
+    public List<DrugDTO> listDrugs() {
         return drugRepository.findByDeletedFalseOrderByUpdatedAtDesc().stream().map((s)->{
-            DrugResponseRequestDTO dto = new DrugResponseRequestDTO();
+            DrugDTO dto = new DrugDTO();
             dto.setDrugId(s.getDrugId());
             dto.setDrugName(s.getDrugName());
             dto.setCompany(s.getCompany());
@@ -151,10 +148,10 @@ public class DrugServiceImpl implements DrugService {
     }
 
     @Override
-    public DrugUpdateRequestDTO findDrugById(Long id) {
+    public DrugDTO findDrugById(Long id) {
 
         Drug drug =  drugRepository.findById(id).orElseThrow();
-        DrugUpdateRequestDTO dto = new DrugUpdateRequestDTO();
+        DrugDTO dto = new DrugDTO();
 
         dto.setDrugId(drug.getDrugId());
         dto.setDrugName(drug.getDrugName());
@@ -180,9 +177,9 @@ public class DrugServiceImpl implements DrugService {
     }
 
     @Override
-    public DrugResponseRequestDTO findDrugByIdApi(Long id) {
+    public DrugDTO findDrugByIdApi(Long id) {
         Drug drug =  drugRepository.findById(id).orElseThrow();
-        DrugResponseRequestDTO dto = new DrugResponseRequestDTO();
+        DrugDTO dto = new DrugDTO();
 
         dto.setDrugId(drug.getDrugId());
         dto.setDrugName(drug.getDrugName());

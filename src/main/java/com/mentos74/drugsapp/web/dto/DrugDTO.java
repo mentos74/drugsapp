@@ -2,11 +2,11 @@ package com.mentos74.drugsapp.web.dto;
 
 import com.mentos74.drugsapp.web.entity.Company;
 import lombok.Data;
+
 import java.util.Set;
 
 @Data
-public class DrugResponseRequestDTO {
-
+public class DrugDTO {
     private Long drugId;
 
     private String drugName;
@@ -25,4 +25,5 @@ public class DrugResponseRequestDTO {
 
     private String drugPhoto;
 
+    private String drugPhotoUrl;
 }
